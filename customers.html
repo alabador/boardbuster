@@ -18,12 +18,21 @@
 
     <h1>Manage Customers</h1>
 
-    <h2>Add New Customer</h2>
-    <form method="POST" action="/addCustomer">
+    <form id="add">
+        <h2>Add New Customer</h2>
         <label>Name:</label> <input type="text" name="name" required>
         <label>Email:</label> <input type="email" name="email" required>
         <label>Phone:</label> <input type="text" name="phone" required>
         <button type="submit">Add Customer</button>
+    </form>
+
+    <form id="edit">
+        <h2>Edit Customer</h2>
+        <label>Name:</label> <input type="text" name="name" required>
+        <label>Email:</label> <input type="email" name="email" required>
+        <label>Phone:</label> <input type="text" name="phone" required>
+        <button type="button" id="confirmEdit" onclick="closeForm()">Save</button>
+        <button type="button" id="cancel" onclick="closeForm()">Cancel</button>
     </form>
 
     <h2>Existing Customers</h2>
