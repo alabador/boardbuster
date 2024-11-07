@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>BoardBuster - Manage Board Games</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
@@ -17,8 +18,8 @@
 
     <h1>Manage Board Games</h1>
 
-    <h2>Add New Board Game</h2>
-    <form method="POST" action="/addBoardGame">
+    <form id="add">
+        <h2>Add New Board Game</h2>
         <label>Title:</label> <input type="text" name="title" required>
         <label>Category ID:</label> <input type="number" name="category" required>
         <label>Player Count:</label> <input type="number" name="players" required>
@@ -27,8 +28,90 @@
         <button type="submit">Add Game</button>
     </form>
 
+    <form id="edit">
+        <h2>Edit Board Game</h2>
+        <label>Title:</label> <input type="text" name="title" required>
+        <label>Category ID:</label> <input type="number" name="category" required>
+        <label>Player Count:</label> <input type="number" name="players" required>
+        <label>Cost:</label> <input type="number" step="0.01" name="cost" required>
+        <label>Quantity:</label> <input type="number" name="quantity" required>
+        <button type="button" id="confirmEdit" onclick="closeForm()">Save</button>
+        <button type="button" id="cancel" onclick="closeForm()">Cancel</button>
+    </form>
+
+    <h2>Board Game Inventory</h2>
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Available</th>
+            <th>Quantity</th>
+            <th></th>
+        </tr>
+        <tr>
+            <td>Monopoly</td>
+            <td>29.99</td>
+            <td>TRUE</td>
+            <td>10</td>
+            <td>
+                <button onclick="showEditForm()">Edit</button>
+                <button>Delete</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Catan</td>
+            <td>39.99</td>
+            <td>TRUE</td>
+            <td>5</td>
+            <td>
+                <button onclick="showEditForm()">Edit</button>
+                <button>Delete</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Pandemic</td>
+            <td>34.99</td>
+            <td>FALSE</td>
+            <td>0</td>
+            <td>
+                <button onclick="showEditForm()">Edit</button>
+                <button>Delete</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Exploding Kittens</td>
+            <td>19.99</td>
+            <td>TRUE</td>
+            <td>15</td>
+            <td>
+                <button onclick="showEditForm()">Edit</button>
+                <button>Delete</button>
+            </td>
+        </tr>
+    </table>
+
     <footer>
         <p>© 2024 Austin Labador & Vincent Le</p>
     </footer>
 </body>
+<!-- 
+Citation for the following function:
+Date: 11/7/2024
+Adapted from CS 340 Exploration - Web Application Technology
+Used the concept of hiding and showing forms, as well as the source code as a basis. 
+Adapted this to fit the needs of this form.
+Source URL: https://canvas.oregonstate.edu/courses/1976520/pages/exploration-web-application-technology?module_item_id=24719064
+-->
+<script language="JavaScript">
+    function showEditForm() {
+        document.getElementById('add').style.display = 'none';
+        document.getElementById('edit').style.display = 'block';
+        
+    }
+
+    function closeForm() {
+        document.getElementById('edit').style.display = 'none';
+        document.getElementById('add').style.display = 'block';
+    }
+</script>
 </html>
