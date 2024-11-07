@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>BoardBuster - Manage Rentals</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
@@ -17,17 +18,76 @@
 
     <h1>Manage Rentals</h1>
 
-    <h2>Add New Rental</h2>
-    <form method="POST" action="/addRental">
+    <form id="add">
+        <h2>Add New Rental</h2>
         <label>Customer ID:</label> <input type="number" name="customerID" required>
         <label>Rental Date:</label> <input type="date" name="rentalDate" required>
         <label>Return Date:</label> <input type="date" name="returnDate">
         <label>Rental Cost:</label> <input type="number" step="0.01" name="rentalCost" required>
         <button type="submit">Add Rental</button>
     </form>
+    <form id="edit">
+        <h2>Edit Rental</h2>
+        <label>Customer ID:</label> <input type="number" name="customerID" required>
+        <label>Rental Date:</label> <input type="date" name="rentalDate" required>
+        <label>Return Date:</label> <input type="date" name="returnDate">
+        <label>Rental Cost:</label> <input type="number" step="0.01" name="rentalCost" required>
+        <button type="button" id="confirmEdit" onclick="closeForm()">Save</button>
+        <button type="button" id="cancel" onclick="closeForm()">Cancel</button>
+    </form>
 
+    <h2>Existing Rentals</h2>
+    <table>
+        <tr>
+            <th>Customer ID</th>
+            <th>Rental Date</th>
+            <th>Return Date</th>
+            <th>Rental Cost</th>
+            <th></th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>2024-01-10</td>
+            <td>2024-01-11</td>
+            <td>5.99</td>
+            <td>
+                <button onclick="showEditForm()">Edit</button>
+                <button>Delete</button>
+            </td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>2024-01-11</td>
+            <td>2024-01-12</td>
+            <td>8.99</td>
+            <td>
+                <button onclick="showEditForm()">Edit</button>
+                <button>Delete</button>
+            </td>
+        </tr>
+    </table>
     <footer>
         <p>© 2024 Austin Labador & Vincent Le</p>
     </footer>
 </body>
+    <!-- 
+    Citation for the following function:
+    Date: 11/7/2024
+    Adapted from CS 340 Exploration - Web Application Technology
+    Used the concept of hiding and showing forms, as well as the source code as a basis. 
+    Adapted this to fit the needs of this form.
+    Source URL: https://canvas.oregonstate.edu/courses/1976520/pages/exploration-web-application-technology?module_item_id=24719064
+    -->
+    <script language="JavaScript">
+        function showEditForm() {
+            document.getElementById('add').style.display = 'none';
+            document.getElementById('edit').style.display = 'block';
+            
+        }
+
+        function closeForm() {
+            document.getElementById('edit').style.display = 'none';
+            document.getElementById('add').style.display = 'block';
+        }
+    </script>
 </html>
