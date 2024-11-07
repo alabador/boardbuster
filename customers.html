@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>BoardBuster - Manage Customers</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
@@ -25,8 +26,56 @@
         <button type="submit">Add Customer</button>
     </form>
 
+    <h2>Existing Customers</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th></th>
+        </tr>
+        <tr>
+            <td>John Doe</td>
+            <td>johndoe@example.com</td>
+            <td>5551234567</td>
+            <td>
+                <button onclick="showEditForm()">Edit</button>
+                <button>Delete</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Jane Smith</td>
+            <td>janesmith@example.com</td>
+            <td>5559876543</td>
+            <td>
+                <button onclick="showEditForm()">Edit</button>
+                <button>Delete</button>
+            </td>
+        </tr>
+    </table>
+
     <footer>
         <p>© 2024 Austin Labador & Vincent Le</p>
     </footer>
+    <!-- 
+    Citation for the following function:
+    Date: 11/7/2024
+    Adapted from CS 340 Exploration - Web Application Technology
+    Used the concept of hiding and showing forms, as well as the source code as a basis. 
+    Adapted this to fit the needs of this form.
+    Source URL: https://canvas.oregonstate.edu/courses/1976520/pages/exploration-web-application-technology?module_item_id=24719064
+    -->
+    <script language="JavaScript">
+        function showEditForm() {
+            document.getElementById('add').style.display = 'none';
+            document.getElementById('edit').style.display = 'block';
+            
+        }
+
+        function closeForm() {
+            document.getElementById('edit').style.display = 'none';
+            document.getElementById('add').style.display = 'block';
+        }
+    </script>
 </body>
 </html>
