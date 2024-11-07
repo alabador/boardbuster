@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BoardBuster - Manage Board Games</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html">Home</a> |
+            <a href="boardgames.html">Manage Board Games</a> |
+            <a href="customers.html">Manage Customers</a> |
+            <a href="orders.html">Manage Orders</a> |
+            <a href="rentals.html">Manage Rentals</a>
+        </nav>
+    </header>
+
+    <h1>Manage Board Games</h1>
+
+    <h2>Add New Board Game</h2>
+    <form method="POST" action="/addBoardGame">
+        <label>Title:</label> <input type="text" name="title" required>
+        <label>Category ID:</label> <input type="number" name="category" required>
+        <label>Player Count:</label> <input type="number" name="players" required>
+        <label>Cost:</label> <input type="number" step="0.01" name="cost" required>
+        <label>Quantity:</label> <input type="number" name="quantity" required>
+        <button type="submit">Add Game</button>
+    </form>
+
+    <footer>
+        <p>© 2024 Austin Labador & Vincent Le</p>
+    </footer>
+</body>
+</html>

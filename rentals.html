@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BoardBuster - Manage Rentals</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html">Home</a> |
+            <a href="boardgames.html">Manage Board Games</a> |
+            <a href="customers.html">Manage Customers</a> |
+            <a href="orders.html">Manage Orders</a> |
+            <a href="rentals.html">Manage Rentals</a>
+        </nav>
+    </header>
+
+    <h1>Manage Rentals</h1>
+
+    <h2>Add New Rental</h2>
+    <form method="POST" action="/addRental">
+        <label>Customer ID:</label> <input type="number" name="customerID" required>
+        <label>Rental Date:</label> <input type="date" name="rentalDate" required>
+        <label>Return Date:</label> <input type="date" name="returnDate">
+        <label>Rental Cost:</label> <input type="number" step="0.01" name="rentalCost" required>
+        <button type="submit">Add Rental</button>
+    </form>
+
+    <footer>
+        <p>© 2024 Austin Labador & Vincent Le</p>
+    </footer>
+</body>
+</html>
