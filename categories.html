@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>BoardBuster - Manage Customers</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BoardBuster - Manage Categories</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -17,39 +18,35 @@
         </nav>
     </header>
 
-    <h1>Manage Customers</h1>
+    <h1>Manage Categories</h1>
 
     <form id="add">
-        <h2>Add New Customer</h2>
+        <h2>Add New Category</h2>
         <label>Name:</label> <input type="text" name="name" required>
-        <label>Email:</label> <input type="email" name="email" required>
-        <label>Phone:</label> <input type="text" name="phone" required>
-        <button type="submit">Add Customer</button>
+        <label>Description:</label> <textarea type="text" name="phone" > </textarea>
+        <button type="submit">Add Category</button>
     </form>
 
     <form id="edit">
-        <h2>Edit Customer</h2>
+        <h2>Edit Category</h2>
         <label>Name:</label> <input type="text" name="name" required>
-        <label>Email:</label> <input type="email" name="email" required>
-        <label>Phone:</label> <input type="text" name="phone" required>
+        <label>Description:</label> <textarea type="text" name="phone" > </textarea>
         <button type="button" id="confirmEdit" onclick="closeForm()">Save</button>
         <button type="button" id="cancel" onclick="closeForm()">Cancel</button>
     </form>
 
-    <h2>Existing Customers</h2>
+    <h2>Categories</h2>
     <table>
         <tr>
-            <th>Customer ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone</th>
+            <th>Category ID</th>
+            <th>Category Name</th>
+            <th>Description</th>
             <th></th>
         </tr>
         <tr>
             <td>1</td>
-            <td>John Doe</td>
-            <td>johndoe@example.com</td>
-            <td>5551234567</td>
+            <td>Party Games</td>
+            <td>Games ideal for parties and large groups</td>
             <td>
                 <button onclick="showEditForm()">Edit</button>
                 <button>Delete</button>
@@ -57,9 +54,8 @@
         </tr>
         <tr>
             <td>2</td>
-            <td>Jane Smith</td>
-            <td>janesmith@example.com</td>
-            <td>5559876543</td>
+            <td>Strategy</td>
+            <td>Games requiring strategy and planning</td>
             <td>
                 <button onclick="showEditForm()">Edit</button>
                 <button>Delete</button>
@@ -67,9 +63,8 @@
         </tr>
         <tr>
             <td>3</td>
-            <td>Steve Work</td>
-            <td>stevework@example.com</td>
-            <td>5552471643</td>
+            <td>Family</td>
+            <td>Games suitable for all</td>
             <td>
                 <button onclick="showEditForm()">Edit</button>
                 <button>Delete</button>
