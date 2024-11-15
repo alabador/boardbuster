@@ -20,14 +20,24 @@
 
     <form id="add">
         <h2>Add New Order</h2>
-        <label>Customer ID:</label> <input type="number" name="customerID" required>
+        <label for="addOrderCustomer">Customer ID:</label>                
+        <select name="customer" id="addOrderCustomer" required>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
         <label>Order Date:</label> <input type="date" name="orderDate" required>
         <label>Order Amount:</label> <input type="number" step="0.01" name="orderAmount" required>
         <button type="submit">Add Order</button>
     </form>
     <form id="edit">
         <h2>Edit Order</h2>
-        <label>Customer ID:</label> <input type="number" name="customerID" required>
+        <label for="editOrderCustomer">Customer ID:</label> 
+        <select name="customer" id="editOrderCustomer" required>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
         <label>Order Date:</label> <input type="date" name="orderDate" required>
         <label>Order Amount:</label> <input type="number" step="0.01" name="orderAmount" required>
         <button type="button" id="confirmEdit" onclick="closeForm()">Save</button>
@@ -37,12 +47,14 @@
     <h2>Existing Orders</h2>
     <table>
         <tr>
+            <th>Order ID</th>
             <th>Customer ID</th>
             <th>Order Date</th>
             <th>Order Amount</th>
             <th></th>
         </tr>
         <tr>
+            <td>1</td>
             <td>1</td>
             <td>2024-02-01</td>
             <td>59.98</td>
@@ -53,8 +65,19 @@
         </tr>
         <tr>
             <td>2</td>
+            <td>2</td>
             <td>2024-02-02</td>
             <td>19.99</td>
+            <td>
+                <button onclick="showEditForm()">Edit</button>
+                <button>Delete</button>
+            </td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>2</td>
+            <td>2024-02-03</td>
+            <td>34.99</td>
             <td>
                 <button onclick="showEditForm()">Edit</button>
                 <button>Delete</button>
