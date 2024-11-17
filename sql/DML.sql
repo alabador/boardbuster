@@ -40,6 +40,20 @@ UPDATE Orders SET customerID = ?, orderDate = ?, orderAmount = ? WHERE orderID =
 -- Delete (Remove Order)
 DELETE FROM Orders WHERE orderID = ?;
 
+-- OrderDetails CRUD Operations
+
+-- Select (View All Order Details)
+SELECT * FROM OrderDetails;
+
+-- Insert (Add New Order Detail)
+INSERT INTO OrderDetails (orderID, gameID, quantity, price) VALUES (?, ?, ?, ?);
+
+-- Update (Modify Existing Order Detail)
+UPDATE OrderDetails SET orderID = ?, gameID = ?, quantity = ?, price = ? WHERE orderDetailID = ?;
+
+-- Delete (Remove Order Detail)
+DELETE FROM OrderDetails WHERE orderDetailID = ?;
+
 -- Rentals CRUD Operations
 
 -- Select (View All Rentals)
@@ -53,3 +67,17 @@ UPDATE Rentals SET customerID = ?, rentalDate = ?, returnDate = ?, rentalCost = 
 
 -- Delete (Remove Rental)
 DELETE FROM Rentals WHERE rentalID = ?;
+
+-- RentalDetails CRUD Operations
+
+-- Select (View All Rental Details)
+SELECT * FROM RentalDetails;
+
+-- Insert (Add New Rental Detail)
+INSERT INTO RentalDetails (rentalID, gameID, rentalDuration, rentalPrice) VALUES (?, ? , ?, ?);
+
+-- Update (Modify Existing Rental Detail)
+UPDATE RentalDetails SET rentalID = ?, gameID = ?, rentalDuration = ?, rentalPrice = ? WHERE rentalDetailID = ?;
+
+-- Delete (Remove Rental Detail)
+DELETE FROM RentalDetails WHERE rentalDetailID = ?;
