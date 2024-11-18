@@ -23,15 +23,15 @@
     <h1>Rental Details</h1>
 
     <form id="add">
-        <h2>Add New Order</h2>
-        <label for="addGameID">Game ID:</label>                
-        <select name="game" id="addgameID" required>
+        <h2>Add New Rental</h2>
+        <label for="addOrderID">Order ID:</label>                
+        <select name="order" id="addOrderID" required>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
         </select>
-        <label for="addOrderID">Order ID:</label>                
-        <select name="order" id="addOrderID" required>
+        <label for="addGameID">Game ID:</label>                
+        <select name="game" id="addgameID" required>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -41,15 +41,15 @@
         <button type="submit">Add Order</button>
     </form>
     <form id="edit">
-        <h2>Edit Order</h2>
-        <label for="editGameID">Game ID:</label>                
-        <select name="game" id="editGameID" required>
+        <h2>Edit Rental</h2>
+        <label for="editOrderID">Order ID:</label>                
+        <select name="order" id="editOrderID" required>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
         </select>
-        <label for="editOrderID">Order ID:</label>                
-        <select name="order" id="editOrderID" required>
+        <label for="editGameID">Game ID:</label>                
+        <select name="game" id="editGameID" required>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -60,7 +60,7 @@
         <button type="button" id="cancel" onclick="closeForm()">Cancel</button>
     </form>
 
-    <h2>Existing Orders</h2>
+    <h2>Existing Rentals</h2>
     <label for="customerName">Filter by Customer</label>
     <select name="customerName" id="customerName">
         <option value="1">1</option>
@@ -69,17 +69,19 @@
     </select>
     <table>
         <tr>
-            <th>Order ID</th>
-            <th>Customer ID</th>
-            <th>Order Date</th>
-            <th>Order Amount</th>
+            <th>Rental Detail ID</th>
+            <th>Rental ID</th>
+            <th>Game ID</th>
+            <th>Rental Duration</th>
+            <th>Rental Price</th>
             <th></th>
         </tr>
         <tr>
             <td>1</td>
             <td>1</td>
-            <td>2024-02-01</td>
-            <td>59.98</td>
+            <td>1</td>
+            <td>24</td>
+            <td>2.99</td>
             <td>
                 <button onclick="showEditForm()">Edit</button>
                 <button>Delete</button>
@@ -87,9 +89,10 @@
         </tr>
         <tr>
             <td>2</td>
-            <td>2</td>
-            <td>2024-02-02</td>
-            <td>19.99</td>
+            <td>1</td>
+            <td>3</td>
+            <td>24</td>
+            <td>2.99</td>
             <td>
                 <button onclick="showEditForm()">Edit</button>
                 <button>Delete</button>
@@ -98,8 +101,9 @@
         <tr>
             <td>3</td>
             <td>2</td>
-            <td>2024-02-03</td>
-            <td>34.99</td>
+            <td>2</td>
+            <td>48</td>
+            <td>8.99</td>
             <td>
                 <button onclick="showEditForm()">Edit</button>
                 <button>Delete</button>
