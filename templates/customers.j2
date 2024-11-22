@@ -8,7 +8,7 @@
 <body>
     <header>
         <nav>
-            <a href="index.html">Home</a> |
+            <a href="/">Home</a> |
             <a href="boardgames.html">Manage Board Games</a> |
             <a href="customers.html">Manage Customers</a> |
             <a href="orders.html">Manage Orders</a> |
@@ -27,15 +27,6 @@
         <label>Email:</label> <input type="email" name="email" required>
         <label>Phone:</label> <input type="text" name="phone" required>
         <input type="submit" value="Add Customer" name="Add_Customer" class="btn">
-    </form>
-
-    <form id="edit">
-        <h2>Edit Customer</h2>
-        <label>Name:</label> <input type="text" name="name" required>
-        <label>Email:</label> <input type="email" name="email" required>
-        <label>Phone:</label> <input type="text" name="phone" required>
-        <button type="button" id="confirmEdit" onclick="closeForm()">Save</button>
-        <button type="button" id="cancel" onclick="closeForm()">Cancel</button>
     </form>
 
     <h2>Existing Customers</h2>
@@ -62,7 +53,7 @@
             <td>{{customer[key]}}</td>
             {% endfor %}
             <td>
-                <button onclick="showEditForm()">Edit</button>
+                <a href="edit_customer/{{customer.customerID}}" class="btn">Edit</a>
                 <a href="delete_customer/{{customer.customerID}}" class="btn">Delete</a>
             </td>
         </tr>
@@ -82,11 +73,6 @@
     Source URL: https://canvas.oregonstate.edu/courses/1976520/pages/exploration-web-application-technology?module_item_id=24719064
     -->
     <script language="JavaScript">
-        function showEditForm() {
-            document.getElementById('add').style.display = 'none';
-            document.getElementById('edit').style.display = 'block';
-            
-        }
 
         function closeForm() {
             document.getElementById('edit').style.display = 'none';

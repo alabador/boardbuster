@@ -87,19 +87,43 @@ def customers():
             cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(name,email,phone))
             results = cursor.fetchall()
 
-            # cursor.execute(query, (name, email, phone))
-            # db.connection.commit()
-
-        # redirect back to people page
+        # redirect back to customers page
         return redirect("/customers")
 
 @app.route("/delete_customer/<int:customerID>")
 def delete_customer(customerID):
     #mySQL query to delete the person with passed ID
     query = "DELETE FROM Customers WHERE customerID = '%s';"
-    cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(customerID,))
+    cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(customerID,)) #keep comma, required idk why 
 
     return redirect("/customers")
+
+@app.route("/edit_customer/<int:customerID>", methods=["POST", "GET"])
+def edit_customer(customerID):
+    if request.method == "GET":
+        query = "SELECT * FROM Customers WHERE customerID = %s" % (customerID)
+        cursor = db.execute_query(db_connection=db_connection, query=query)
+        data = cursor.fetchall()
+
+        return render_template("customers_edit.j2", data=data)
+    
+    if request.method == "POST":
+        # runs if user presses 'Edit Customer' button
+        if request.form.get("Edit_Customer"):
+            # grabs user form inputs
+            id = request.form["customerID"]
+            name = request.form["name"]
+            email = request.form["email"]
+            phone = request.form["phone"]
+
+            # no null inputs
+            query = "UPDATE Customers SET Customers.name = %s, Customers.email = %s, Customers.phone = %s WHERE Customers.customerID = %s;"
+            cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(name,email,phone, id))
+            results = cursor.fetchall()
+
+        # redirect back to customers page
+        return redirect("/customers")
+
 
 
 # Listener
