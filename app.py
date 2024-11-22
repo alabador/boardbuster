@@ -66,8 +66,13 @@ def customers():
         # The cursor.fetchall() function tells the cursor object to return all
         # the results from the previously executed
         results = cursor.fetchall()
+        
         # Sends the results back to the web browser.
         return render_template("customers.j2", customers = results)
+        
+        # For testing purposes to see json.
+        # results = json.dumps(cursor.fetchall())
+        # return results
 
     if request.method == "POST":
         # runs if user presses add button
@@ -88,6 +93,13 @@ def customers():
         # redirect back to people page
         return redirect("/customers")
 
+@app.route("/delete_customer/<int:customerID>")
+def delete_customer(customerID):
+    #mySQL query to delete the person with passed ID
+    query = "DELETE FROM Customers WHERE customerID = '%s';"
+    cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(customerID,))
+
+    return redirect("/customers")
 
 
 # Listener
