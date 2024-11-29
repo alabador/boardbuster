@@ -31,6 +31,7 @@
 
     <h2>Existing Customers</h2>
     <table>
+        {% if customers %}
         <tr>
             <!-- Iterate through each key in the first entry to get the
             column name -->
@@ -58,7 +59,7 @@
             </td>
         </tr>
         {% endfor %}
-        
+        {% endif %}
     </table>
 
     <footer>
