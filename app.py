@@ -388,6 +388,31 @@ def delete_orderdetail(orderDetailID):
    
     return redirect("/orderdetails")
 
+@app.route("/edit_orderdetail/<int:orderDetailID>", methods=["POST", "GET"])
+def edit_orderdetail(orderDetailID):
+    if request.method == "GET":
+        query = "SELECT * FROM OrderDetails WHERE orderDetailID = %s" % (orderDetailID)
+        cursor = db.execute_query(db_connection=db_connection, query=query)
+        data = cursor.fetchall()
+
+        return render_template("orderdetails_edit.j2", data=data)
+    
+    if request.method == "POST":
+        # runs if user presses 'Edit Customer' button
+        if request.form.get("Edit_OrderDetail"):
+            # grabs user form inputs
+            orderDetailID = request.form["orderDetailID"]
+            orderID = request.form["orderID"]
+            gameID = request.form["gameID"]
+            price = request.form["price"]
+            quantity = request.form["quantity"]
+
+            # no null inputs
+            query = "UPDATE OrderDetails SET OrderDetails.orderID = %s, OrderDetails.gameID = %s, OrderDetails.quantity = %s, OrderDetails.price = %s WHERE OrderDetails.orderDetailID = %s;"
+            cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(orderID, gameID, quantity, price, orderDetailID))
+            results = cursor.fetchall()
+        return redirect("/orderdetails")
+
 # Listener
 
 if __name__ == "__main__":
