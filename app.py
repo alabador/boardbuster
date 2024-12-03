@@ -258,7 +258,7 @@ def edit_category(categoryID):
         return redirect("/categories")
 
 # Orders
-@app.route('/orders', methods = ["POST", "GET"])
+@app.route("/orders", methods=["POST", "GET"])
 def orders():
     # Write the query and save it to a variable
     if request.method == "GET":
@@ -300,6 +300,7 @@ def orders():
         # redirect back to customers page
         return redirect("/orders")
 
+
 @app.route("/delete_order/<int:orderID>")
 def delete_order(orderID):
     #mySQL query to delete the person with passed ID
@@ -307,6 +308,30 @@ def delete_order(orderID):
     cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(orderID,)) #keep comma, required idk why
    
     return redirect("/orders")
+
+@app.route("/edit_order/<int:orderID>", methods=["POST", "GET"])
+def edit_order(orderID):
+    if request.method == "GET":
+        query = "SELECT * FROM Orders WHERE orderID = %s" % (orderID)
+        cursor = db.execute_query(db_connection=db_connection, query=query)
+        data = cursor.fetchall()
+
+        return render_template("orders_edit.j2", data=data)
+    
+    if request.method == "POST":
+        # runs if user presses 'Edit Customer' button
+        if request.form.get("Edit_Order"):
+            # grabs user form inputs
+            orderID = request.form["orderID"]
+            customerID = request.form["customerID"]
+            orderDate = request.form["orderDate"]
+            orderAmount = request.form["orderAmount"]
+
+            # no null inputs
+            query = "UPDATE Orders SET Orders.customerID = %s, Orders.orderDate = %s, Orders.orderAmount = %s WHERE Orders.orderID = %s;"
+            cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(customerID, orderDate, orderAmount, orderID))
+            results = cursor.fetchall()
+        return redirect("/orders")
 
 # OrderDetails
 @app.route('/orderdetails', methods = ["POST", "GET"])
