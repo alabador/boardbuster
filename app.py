@@ -56,6 +56,7 @@ def root():
 def bsg_people():
     return "This is the bsg-people route."
 
+# Customers Routes
 @app.route('/customers', methods = ["POST", "GET"])
 def customers():
     # Write the query and save it to a variable
@@ -255,6 +256,162 @@ def edit_category(categoryID):
             """
             db.execute_query(db_connection=db_connection, query=query, query_params=(categoryName, description, categoryID))
         return redirect("/categories")
+
+# Orders
+@app.route("/orders", methods=["POST", "GET"])
+def orders():
+    # Write the query and save it to a variable
+    if request.method == "GET":
+        query = "SELECT * FROM Orders"
+        cursor = db.execute_query(db_connection=db_connection, query=query)
+
+        # The cursor.fetchall() function tells the cursor object to return all
+        # the results from the previously executed
+        results = cursor.fetchall()
+
+        
+        # Query to grab customer ID's for dropdown.
+        query2 = "SELECT customerID from Customers"
+        cursor = db.execute_query(db_connection=db_connection, query=query2)
+        customerid_data = cursor.fetchall()
+
+        
+        # Sends the results back to the web browser.
+        return render_template("orders.j2", orders = results, customers = customerid_data)
+        
+        # For testing purposes to see json.
+        # results = json.dumps(cursor.fetchall())
+        # return results
+
+    if request.method == "POST":
+        # runs if user presses add button
+        if request.form.get("Add_Order"):
+            # grabs user form inputs
+            customer = request.form["customer"]
+            orderDate = request.form["orderDate"]
+            orderAmount = request.form["orderAmount"]
+
+            # no null inputs
+            query = "INSERT INTO Orders (customerID, orderDate, orderAmount) VALUES (%s, %s, %s)"
+            cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(customer,orderDate,orderAmount))
+            results = cursor.fetchall()
+            
+
+        # redirect back to customers page
+        return redirect("/orders")
+
+
+@app.route("/delete_order/<int:orderID>")
+def delete_order(orderID):
+    #mySQL query to delete the person with passed ID
+    query = "DELETE FROM Orders WHERE orderID = '%s';"
+    cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(orderID,)) #keep comma, required idk why
+   
+    return redirect("/orders")
+
+@app.route("/edit_order/<int:orderID>", methods=["POST", "GET"])
+def edit_order(orderID):
+    if request.method == "GET":
+        query = "SELECT * FROM Orders WHERE orderID = %s" % (orderID)
+        cursor = db.execute_query(db_connection=db_connection, query=query)
+        data = cursor.fetchall()
+
+        return render_template("orders_edit.j2", data=data)
+    
+    if request.method == "POST":
+        # runs if user presses 'Edit Customer' button
+        if request.form.get("Edit_Order"):
+            # grabs user form inputs
+            orderID = request.form["orderID"]
+            customerID = request.form["customerID"]
+            orderDate = request.form["orderDate"]
+            orderAmount = request.form["orderAmount"]
+
+            # no null inputs
+            query = "UPDATE Orders SET Orders.customerID = %s, Orders.orderDate = %s, Orders.orderAmount = %s WHERE Orders.orderID = %s;"
+            cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(customerID, orderDate, orderAmount, orderID))
+            results = cursor.fetchall()
+        return redirect("/orders")
+
+# OrderDetails
+@app.route('/orderdetails', methods = ["POST", "GET"])
+def orderdetails():
+    # Write the query and save it to a variable
+    if request.method == "GET":
+        query = "SELECT * FROM OrderDetails"
+        cursor = db.execute_query(db_connection=db_connection, query=query)
+
+        # The cursor.fetchall() function tells the cursor object to return all
+        # the results from the previously executed
+        results = cursor.fetchall()
+        
+        # Query to grab order ID for dropdown.
+        query2 = "SELECT orderID from Orders"
+        cursor = db.execute_query(db_connection=db_connection, query=query2)
+        order_data = cursor.fetchall()
+        
+        # Query to grab game ID for dropdown.
+        query3 = "SELECT gameID from BoardGames"
+        cursor = db.execute_query(db_connection=db_connection, query=query3)
+        game_data = cursor.fetchall()
+
+        # Sends the results back to the web browser.
+        return render_template("orderdetails.j2", orderdetails = results, orders = order_data, games = game_data)
+        
+        # For testing purposes to see json.
+        # results = json.dumps(cursor.fetchall())
+        # return results
+
+    if request.method == "POST":
+        # runs if user presses add button
+        if request.form.get("Add_Order_Detail"):
+            # grabs user form inputs
+            order = request.form["order"]
+            game = request.form["game"]
+            price = request.form["price"]
+            quantity = request.form["quantity"]
+
+            # no null inputs
+            query = "INSERT INTO OrderDetails (orderID, gameID, quantity, price) VALUES (%s, %s, %s, %s)"
+            cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(order,game,quantity,price))
+            results = cursor.fetchall()
+            
+
+        # redirect back to customers page
+        return redirect("/orderdetails")
+
+@app.route("/delete_orderdetail/<int:orderDetailID>")
+def delete_orderdetail(orderDetailID):
+    #mySQL query to delete the orderDetail with passed ID
+    query = "DELETE FROM OrderDetails WHERE orderDetailID = '%s';"
+    cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(orderDetailID,)) #keep comma, required idk why
+   
+    return redirect("/orderdetails")
+
+@app.route("/edit_orderdetail/<int:orderDetailID>", methods=["POST", "GET"])
+def edit_orderdetail(orderDetailID):
+    if request.method == "GET":
+        query = "SELECT * FROM OrderDetails WHERE orderDetailID = %s" % (orderDetailID)
+        cursor = db.execute_query(db_connection=db_connection, query=query)
+        data = cursor.fetchall()
+
+        return render_template("orderdetails_edit.j2", data=data)
+    
+    if request.method == "POST":
+        # runs if user presses 'Edit Customer' button
+        if request.form.get("Edit_OrderDetail"):
+            # grabs user form inputs
+            orderDetailID = request.form["orderDetailID"]
+            orderID = request.form["orderID"]
+            gameID = request.form["gameID"]
+            price = request.form["price"]
+            quantity = request.form["quantity"]
+
+            # no null inputs
+            query = "UPDATE OrderDetails SET OrderDetails.orderID = %s, OrderDetails.gameID = %s, OrderDetails.quantity = %s, OrderDetails.price = %s WHERE OrderDetails.orderDetailID = %s;"
+            cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(orderID, gameID, quantity, price, orderDetailID))
+            results = cursor.fetchall()
+        return redirect("/orderdetails")
 
 # Listener
 
