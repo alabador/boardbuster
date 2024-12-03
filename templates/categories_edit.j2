@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BoardBuster - Edit Category</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{{ url_for('root') }}">Home</a> |
+            <a href="{{ url_for('boardgames') }}">Manage Board Games</a> |
+            <a href="{{ url_for('categories') }}">Manage Categories</a>
+        </nav>
+    </header>
+
+    <h1>Edit Category</h1>
+
+    <!-- Display Category Details in a Table -->
+    <table>
+        {% if data %}
+        <thead>
+            <tr>
+                <th>Category ID</th>
+                <th>Category Name</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for category in data %}
+            <tr>
+                <td>{{ category.categoryID }}</td>
+                <td>{{ category.categoryName }}</td>
+                <td>{{ category.description }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        {% endif %}
+    </table>
+
+    <!-- Edit Form -->
+    <form id="edit" action="/edit_category/{{data[0].categoryID}}" method="POST">
+        <h2>Edit Category</h2>
+
+        <!-- Hidden field for category ID -->
+        <input type="hidden" value="{{data[0].categoryID}}" name="categoryID" required>
+
+        <!-- Fields for editing -->
+        <label>Category Name:</label>
+        <input type="text" value="{{data[0].categoryName}}" name="categoryName" required>
+
+        <label>Description:</label>
+        <textarea name="description" required>{{data[0].description}}</textarea>
+
+        <!-- Submit button -->
+        <input type="submit" value="Edit Category" name="Edit_Category" class="btn">
+        <a href="/categories" class="btn">Cancel</a>
+    </form>
+
+    <footer>
+        <p>© 2024 Austin Labador & Vincent Le</p>
+    </footer>
+</body>
+</html>

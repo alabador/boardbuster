@@ -192,6 +192,69 @@ def edit_boardgame(gameID):
             """
             db.execute_query(db_connection=db_connection, query=query, query_params=(title, categoryID, playerCount, gameCost, quantity, gameID))
         return redirect("/boardgames")
+    
+@app.route('/categories', methods=["POST", "GET"])
+def categories():
+    if request.method == "GET":
+        # Select necessary columns for categories
+        query = """
+        SELECT categoryID, categoryName, description
+        FROM Categories;
+        """
+        cursor = db.execute_query(db_connection=db_connection, query=query)
+        results = cursor.fetchall()
+        return render_template("categories.j2", categories=results)
+
+    if request.method == "POST":
+        if request.form.get("Add_Category"):
+            # Retrieve form data
+            categoryName = request.form["categoryName"]
+            description = request.form["description"]
+
+            # Insert new category
+            query = """
+            INSERT INTO Categories (categoryName, description)
+            VALUES (%s, %s);
+            """
+            db.execute_query(db_connection=db_connection, query=query, query_params=(categoryName, description))
+        return redirect("/categories")
+
+
+@app.route("/delete_category/<int:categoryID>")
+def delete_category(categoryID):
+    # Delete the category by its ID
+    query = "DELETE FROM Categories WHERE categoryID = %s;"
+    db.execute_query(db_connection=db_connection, query=query, query_params=(categoryID,))
+    return redirect("/categories")
+
+
+@app.route("/edit_category/<int:categoryID>", methods=["POST", "GET"])
+def edit_category(categoryID):
+    if request.method == "GET":
+        # Fetch the specific category for editing
+        query = """
+        SELECT categoryID, categoryName, description
+        FROM Categories
+        WHERE categoryID = %s;
+        """
+        cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(categoryID,))
+        data = cursor.fetchall()
+        return render_template("categories_edit.j2", data=data)
+
+    if request.method == "POST":
+        if request.form.get("Edit_Category"):
+            # Retrieve updated form data
+            categoryName = request.form["categoryName"]
+            description = request.form["description"]
+
+            # Update category details
+            query = """
+            UPDATE Categories
+            SET categoryName = %s, description = %s
+            WHERE categoryID = %s;
+            """
+            db.execute_query(db_connection=db_connection, query=query, query_params=(categoryName, description, categoryID))
+        return redirect("/categories")
 
 # Listener
 

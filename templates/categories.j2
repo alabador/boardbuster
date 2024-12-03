@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BoardBuster - Manage Categories</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/">Home</a> |
+            <a href="/boardgames">Manage Board Games</a> |
+            <a href="/customers">Manage Customers</a> |
+            <a href="orders.html">Manage Orders</a> |
+            <a href="orderdetails.html">Order Details</a> |
+            <a href="rentals.html">Manage Rentals</a> |
+            <a href="rentaldetails.html">Rental Details</a> |
+            <a href="/categories">Manage Categories</a>
+        </nav>
+    </header>
+
+    <h1>Manage Categories</h1>
+
+    <!-- Add New Category Form -->
+    <form method="POST" action="{{ url_for('categories') }}">
+        <h2>Add New Category</h2>
+        <label>Category Name:</label>
+        <input type="text" name="categoryName" required>
+        
+        <label>Description:</label>
+        <textarea name="description" required></textarea>
+        
+        <button type="submit" name="Add_Category">Add Category</button>
+    </form>
+
+    <!-- Categories Table -->
+    <h2>Categories</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Category ID</th>
+                <th>Category Name</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for category in categories %}
+            <tr>
+                <td>{{ category.categoryID }}</td>
+                <td>{{ category.categoryName }}</td>
+                <td>{{ category.description }}</td>
+                <td>
+                    <a href="/edit_category/{{ category.categoryID }}">Edit</a>
+                    <a href="/delete_category/{{ category.categoryID }}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <footer>
+        <p>© 2024 Austin Labador & Vincent Le</p>
+    </footer>
+</body>
+</html>
