@@ -26,8 +26,8 @@
         <label for="addOrderCustomer">Customer ID:</label>                
         <select name="customer" id="addOrderCustomer" required>
             {% if customers %}
-            {% for key in customers[0] %}
-            <option value="{{customers[0][key]}}">{{customers[0][key]}}</option>
+            {% for key in customers %}
+            <option value="{{key['customerID']}}">{{key['customerID']}}</option>
             {% endfor %}
             {% endif %}
         </select>

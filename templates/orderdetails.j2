@@ -25,8 +25,8 @@
         <label for="addOrderID">Order ID:</label>                
         <select name="order" id="addOrderID" required>
             {% if orders %}
-            {% for key in orders[0] %}
-            <option value="{{orders[0][key]}}">{{orders[0][key]}}</option>
+            {% for key in orders %}
+            <option value="{{key['orderID']}}">{{key['orderID']}}</option>
             {% endfor %}
             {% endif %}
         </select>
