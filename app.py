@@ -308,7 +308,7 @@ def delete_order(orderID):
    
     return redirect("/orders")
 
-
+# OrderDetails
 @app.route('/orderdetails', methods = ["POST", "GET"])
 def orderdetails():
     # Write the query and save it to a variable
@@ -319,7 +319,6 @@ def orderdetails():
         # The cursor.fetchall() function tells the cursor object to return all
         # the results from the previously executed
         results = cursor.fetchall()
-
         
         # Query to grab order ID for dropdown.
         query2 = "SELECT orderID from Orders"
@@ -331,9 +330,6 @@ def orderdetails():
         cursor = db.execute_query(db_connection=db_connection, query=query3)
         game_data = cursor.fetchall()
 
-        # results = json.dumps(cursor.fetchall())
-        # return results
-
         # Sends the results back to the web browser.
         return render_template("orderdetails.j2", orderdetails = results, orders = order_data, games = game_data)
         
@@ -343,20 +339,29 @@ def orderdetails():
 
     if request.method == "POST":
         # runs if user presses add button
-        if request.form.get("Add_Order"):
+        if request.form.get("Add_Order_Detail"):
             # grabs user form inputs
-            customer = request.form["customer"]
-            orderDate = request.form["orderDate"]
-            orderAmount = request.form["orderAmount"]
+            order = request.form["order"]
+            game = request.form["game"]
+            price = request.form["price"]
+            quantity = request.form["quantity"]
 
             # no null inputs
-            query = "INSERT INTO Orders (customerID, orderDate, orderAmount) VALUES (%s, %s, %s)"
-            cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(customer,orderDate,orderAmount))
+            query = "INSERT INTO OrderDetails (orderID, gameID, quantity, price) VALUES (%s, %s, %s, %s)"
+            cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(order,game,quantity,price))
             results = cursor.fetchall()
             
 
         # redirect back to customers page
-        return redirect("/orders")
+        return redirect("/orderdetails")
+
+@app.route("/delete_orderdetail/<int:orderDetailID>")
+def delete_orderdetail(orderDetailID):
+    #mySQL query to delete the orderDetail with passed ID
+    query = "DELETE FROM OrderDetails WHERE orderDetailID = '%s';"
+    cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(orderDetailID,)) #keep comma, required idk why
+   
+    return redirect("/orderdetails")
 
 # Listener
 
