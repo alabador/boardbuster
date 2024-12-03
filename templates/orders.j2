@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BoardBuster - Manage Orders</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/">Home</a> |
+            <a href="boardgames.html">Manage Board Games</a> |
+            <a href="/customers">Manage Customers</a> |
+            <a href="/orders">Manage Orders</a> |
+            <a href="orderdetails.html">Order Details</a> |
+            <a href="rentals.html">Manage Rentals</a> |
+            <a href="rentaldetails.html">Rental Details</a> |
+            <a href="categories.html">Manage Categories</a>
+        </nav>
+    </header>
+
+    <h1>Manage Orders</h1>
+
+    <form id="add" action="/orders" method="POST">
+        <h2>Add New Order</h2>
+        <label for="addOrderCustomer">Customer ID:</label>                
+        <select name="customer" id="addOrderCustomer" required>
+            {% if customers %}
+            {% for key in customers[0] %}
+            <option value="{{customers[0][key]}}">{{customers[0][key]}}</option>
+            {% endfor %}
+            {% endif %}
+        </select>
+        <label>Order Date:</label> <input type="date" name="orderDate" required>
+        <label>Order Amount:</label> <input type="number" step="0.01" name="orderAmount" required>
+        <input type="submit" value="Add Order" name="Add_Order" class="btn">
+    </form>
+
+    <h2>Existing Orders</h2>
+    <table>
+        {% if orders %}
+        <tr>
+            <!-- Iterate through each key in the first entry to get the
+            column name -->
+
+            {% for key in orders[0].keys() %}
+
+            <!-- Create a <th> tag with the key inside of it, this will be
+            our header row -->
+            <th>{{ key }}</th>
+
+            <!-- End of this for loop -->
+            {% endfor %}
+
+            <!-- Extra header row for edit and delete buttons -->
+            <th></th>
+        </tr>
+        {% for order in orders %}
+        <tr>
+            {% for key in order.keys() %}
+            <td>{{order[key]}}</td>
+            {% endfor %}
+            <td>
+                <a href="edit_order/{{order.orderID}}" class="btn">Edit</a>
+                <a href="delete_order/{{order.orderID}}" class="btn">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+    </table>
+
+    <footer>
+        <p>© 2024 Austin Labador & Vincent Le</p>
+    </footer>
+    <!-- 
+    Citation for the following function:
+    Date: 11/7/2024
+    Adapted from CS 340 Exploration - Web Application Technology
+    Used the concept of hiding and showing forms, as well as the source code as a basis. 
+    Adapted this to fit the needs of this form.
+    Source URL: https://canvas.oregonstate.edu/courses/1976520/pages/exploration-web-application-technology?module_item_id=24719064
+    -->
+    <script language="JavaScript">
+
+        function closeForm() {
+            document.getElementById('edit').style.display = 'none';
+            document.getElementById('add').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

@@ -56,6 +56,7 @@ def root():
 def bsg_people():
     return "This is the bsg-people route."
 
+# Customers Routes
 @app.route('/customers', methods = ["POST", "GET"])
 def customers():
     # Write the query and save it to a variable
@@ -125,6 +126,56 @@ def edit_customer(customerID):
         return redirect("/customers")
 
 
+# Orders
+@app.route('/orders', methods = ["POST", "GET"])
+def orders():
+    # Write the query and save it to a variable
+    if request.method == "GET":
+        query = "SELECT * FROM Orders"
+        cursor = db.execute_query(db_connection=db_connection, query=query)
+
+        # The cursor.fetchall() function tells the cursor object to return all
+        # the results from the previously executed
+        results = cursor.fetchall()
+
+        
+        # Query to grab customer ID's for dropdown.
+        query2 = "SELECT customerID from Customers"
+        cursor = db.execute_query(db_connection=db_connection, query=query2)
+        customerid_data = cursor.fetchall()
+
+        
+        # Sends the results back to the web browser.
+        return render_template("orders.j2", orders = results, customers = customerid_data)
+        
+        # For testing purposes to see json.
+        # results = json.dumps(cursor.fetchall())
+        # return results
+
+    if request.method == "POST":
+        # runs if user presses add button
+        if request.form.get("Add_Order"):
+            # grabs user form inputs
+            customer = request.form["customer"]
+            orderDate = request.form["orderDate"]
+            orderAmount = request.form["orderAmount"]
+
+            # no null inputs
+            query = "INSERT INTO Orders (customerID, orderDate, orderAmount) VALUES (%s, %s, %s)"
+            cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(customer,orderDate,orderAmount))
+            results = cursor.fetchall()
+            
+
+        # redirect back to customers page
+        return redirect("/orders")
+
+@app.route("/delete_order/<int:orderID>")
+def delete_order(orderID):
+    #mySQL query to delete the person with passed ID
+    query = "DELETE FROM Orders WHERE orderID = '%s';"
+    cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(orderID,)) #keep comma, required idk why
+   
+    return redirect("/orders")
 
 # Listener
 
