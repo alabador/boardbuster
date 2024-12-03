@@ -124,7 +124,74 @@ def edit_customer(customerID):
         # redirect back to customers page
         return redirect("/customers")
 
+@app.route('/boardgames', methods=["POST", "GET"])
+def boardgames():
+    if request.method == "GET":
+        # Select only the necessary columns
+        query = """
+        SELECT gameID, title, categoryID, playerCount, gameCost, quantity
+        FROM BoardGames;
+        """
+        cursor = db.execute_query(db_connection=db_connection, query=query)
+        results = cursor.fetchall()
+        return render_template("boardgames.j2", boardgames=results)
 
+    if request.method == "POST":
+        if request.form.get("Add_BoardGame"):
+            # Retrieve form data
+            title = request.form["title"]
+            categoryID = request.form["categoryID"]
+            playerCount = request.form["playerCount"]
+            gameCost = request.form["gameCost"]
+            quantity = request.form["quantity"]
+
+            # Insert new board game
+            query = """
+            INSERT INTO BoardGames (title, categoryID, playerCount, gameCost, quantity)
+            VALUES (%s, %s, %s, %s, %s);
+            """
+            db.execute_query(db_connection=db_connection, query=query, query_params=(title, categoryID, playerCount, gameCost, quantity))
+        return redirect("/boardgames")
+
+
+@app.route("/delete_boardgame/<int:gameID>")
+def delete_boardgame(gameID):
+    # Delete the board game by its ID
+    query = "DELETE FROM BoardGames WHERE gameID = %s;"
+    db.execute_query(db_connection=db_connection, query=query, query_params=(gameID,))
+    return redirect("/boardgames")
+
+
+@app.route("/edit_boardgame/<int:gameID>", methods=["POST", "GET"])
+def edit_boardgame(gameID):
+    if request.method == "GET":
+        # Fetch the specific board game for editing
+        query = """
+        SELECT gameID, title, categoryID, playerCount, gameCost, quantity
+        FROM BoardGames
+        WHERE gameID = %s;
+        """
+        cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(gameID,))
+        data = cursor.fetchall()
+        return render_template("boardgames_edit.j2", data=data)
+
+    if request.method == "POST":
+        if request.form.get("Edit_BoardGame"):
+            # Retrieve updated form data
+            title = request.form["title"]
+            categoryID = request.form["categoryID"]
+            playerCount = request.form["playerCount"]
+            gameCost = request.form["gameCost"]
+            quantity = request.form["quantity"]
+
+            # Update board game details
+            query = """
+            UPDATE BoardGames
+            SET title = %s, categoryID = %s, playerCount = %s, gameCost = %s, quantity = %s
+            WHERE gameID = %s;
+            """
+            db.execute_query(db_connection=db_connection, query=query, query_params=(title, categoryID, playerCount, gameCost, quantity, gameID))
+        return redirect("/boardgames")
 
 # Listener
 
