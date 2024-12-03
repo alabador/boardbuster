@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BoardBuster - Manage Board Games</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/">Home</a> |
+            <a href="/boardgames">Manage Board Games</a> |
+            <a href="/customers">Manage Customers</a> |
+            <a href="orders.html">Manage Orders</a> |
+            <a href="orderdetails.html">Order Details</a> |
+            <a href="rentals.html">Manage Rentals</a> |
+            <a href="rentaldetails.html">Rental Details</a> |
+            <a href="/categories">Manage Categories</a>
+        </nav>
+    </header>
+
+    <h1>Manage Board Games</h1>
+
+    <!-- Add New Board Game Form -->
+    <form method="POST">
+        <h2>Add New Board Game</h2>
+        <label>Title:</label>
+        <input type="text" name="title" required>
+        <label>Category ID:</label>
+        <input type="number" name="categoryID" required>
+        <label>Player Count:</label>
+        <input type="number" name="players" required>
+        <label>Cost:</label>
+        <input type="number" step="0.01" name="cost" required>
+        <label>Quantity:</label>
+        <input type="number" name="quantity" required>
+        <button type="submit" name="Add_BoardGame">Add Game</button>
+    </form>
+
+    <!-- Board Games Table -->
+    <h2>Board Game Inventory</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Game ID</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Player Count</th>
+                <th>Cost</th>
+                <th>Quantity</th>
+                <th>Available</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for game in boardgames %}
+            <tr>
+                <td>{{ game.gameID }}</td>
+                <td>{{ game.title }}</td>
+                <td>{{ game.categoryID }}</td>
+                <td>{{ game.playerCount }}</td>
+                <td>{{ game.gameCost }}</td>
+                <td>{{ game.quantity }}</td>
+                <td>{{ 'Yes' if game.quantity > 0 else 'No' }}</td>
+                <td>
+                    <a href="/edit_boardgame/{{ game.gameID }}">Edit</a>
+                    <a href="/delete_boardgame/{{ game.gameID }}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <footer>
+        <p>© 2024 Austin Labador & Vincent Le</p>
+    </footer>
+</body>
+</html>

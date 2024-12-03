@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BoardBuster - Edit Board Game</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <header>
+        
+    </header>
+
+    <h1>Edit Board Game</h1>
+
+    <!-- Display Board Game Details in a Table -->
+    <table>
+        {% if data %}
+        <thead>
+            <tr>
+                <!-- Iterate through keys in the first entry to create column headers -->
+                {% for key in data[0].keys() %}
+                <th data-field="{{ key }}">{{ key }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for game in data %}
+            <tr>
+                <!-- Iterate through each key-value pair in the game dictionary -->
+                {% for key in game.keys() %}
+                <td>{{ game[key] }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+        {% endif %}
+    </table>
+
+    <!-- Edit Form -->
+    <form id="edit" action="/edit_boardgame/{{data[0].gameID}}" method="POST">
+        <h2>Edit Board Game</h2>
+
+        <!-- Hidden field for game ID -->
+        <input type="hidden" value="{{data[0].gameID}}" name="gameID" required>
+
+        <!-- Fields for editing -->
+        <label>Title:</label>
+        <input type="text" value="{{data[0].title}}" name="title" required>
+
+        <label>Category ID:</label>
+        <input type="number" value="{{data[0].categoryID}}" name="categoryID" required>
+
+        <label>Player Count:</label>
+        <input type="number" value="{{data[0].playerCount}}" name="playerCount" required>
+
+        <label>Game Cost:</label>
+        <input type="number" step="0.01" value="{{data[0].gameCost}}" name="gameCost" required>
+
+        <label>Quantity:</label>
+        <input type="number" value="{{data[0].quantity}}" name="quantity" required>
+
+        <!-- Submit button -->
+        <input type="submit" value="Edit Board Game" name="Edit_BoardGame" class="btn">
+        <a href="/boardgames" class="btn">Cancel</a>
+    </form>
+
+
+    <footer>
+        <p>© 2024 Austin Labador & Vincent Le</p>
+    </footer>
+</body>
+</html>
