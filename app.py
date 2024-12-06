@@ -1,38 +1,3 @@
-# from flask import Flask, render_template, json, redirect
-# from flask_mysqldb import MySQL
-# from flask import request
-# import os
-
-# app = Flask(__name__)
-
-
-# mysql = MySQL(app)
-
-
-# # Routes
-# @app.route('/')
-# def root():
-#     query = "SELECT * FROM diagnostic;"
-#     query1 = 'DROP TABLE IF EXISTS diagnostic;';
-#     query2 = 'CREATE TABLE diagnostic(id INT PRIMARY KEY AUTO_INCREMENT, text VARCHAR(255) NOT NULL);';
-#     query3 = 'INSERT INTO diagnostic (text) VALUES ("MySQL is working for yourONID!")';
-#     query4 = 'SELECT * FROM diagnostic;';
-#     cur = mysql.connection.cursor()
-#     cur.execute(query1)
-#     cur.execute(query2)
-#     cur.execute(query3)
-#     cur.execute(query4)
-#     results = cur.fetchall()
-
-#     return "<h1>MySQL Results</h1>" + str(results[0])
-
-
-# # Listener
-# if __name__ == "__main__":
-
-#     #Start the app on port 3000, it will be different once hosted
-#     app.run(port=33002, debug=True)
-
 from flask import Flask, render_template, json, redirect
 from flask_mysqldb import MySQL
 from flask import request
@@ -42,7 +7,10 @@ import database.db_connector as db
 
 # Configuration
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="templates")
+
+mysql = MySQL(app)
+
 db_connection = db.connect_to_database()
 #comes from module, is essentially MySQL(app) from starter code
 
@@ -64,16 +32,22 @@ def customers():
         query = "SELECT * FROM Customers"
         cursor = db.execute_query(db_connection=db_connection, query=query)
 
-        # The cursor.fetchall() function tells the cursor object to return all
-        # the results from the previously executed
-        results = cursor.fetchall()
-        
-        # Sends the results back to the web browser.
-        return render_template("customers.j2", customers = results)
-        
-        # For testing purposes to see json.
-        # results = json.dumps(cursor.fetchall())
-        # return results
+        try:
+            # The cursor.fetchall() function tells the cursor object to return all
+            # the results from the previously executed
+            results = cursor.fetchall()
+            
+            # Sends the results back to the web browser.
+            return render_template("customers.j2", customers = results)
+            
+            # For testing purposes to see json.
+            # results = json.dumps(cursor.fetchall())
+            # return result
+        except:
+            print("ERROR")
+        finally:
+            cursor.close()
+
 
     if request.method == "POST":
         # runs if user presses add button
@@ -128,14 +102,19 @@ def edit_customer(customerID):
 @app.route('/boardgames', methods=["POST", "GET"])
 def boardgames():
     if request.method == "GET":
-        # Select only the necessary columns
-        query = """
-        SELECT gameID, title, categoryID, playerCount, gameCost, quantity
-        FROM BoardGames;
-        """
-        cursor = db.execute_query(db_connection=db_connection, query=query)
-        results = cursor.fetchall()
-        return render_template("boardgames.j2", boardgames=results)
+        try:
+            # Select only the necessary columns
+            query = """
+            SELECT gameID, title, categoryID, playerCount, gameCost, quantity
+            FROM BoardGames;
+            """
+            cursor = db.execute_query(db_connection=db_connection, query=query)
+            results = cursor.fetchall()
+            return render_template("boardgames.j2", boardgames=results)
+        except:
+            print("ERROR")
+        finally:
+            cursor.close()
 
     if request.method == "POST":
         if request.form.get("Add_BoardGame"):
@@ -197,14 +176,19 @@ def edit_boardgame(gameID):
 @app.route('/categories', methods=["POST", "GET"])
 def categories():
     if request.method == "GET":
-        # Select necessary columns for categories
-        query = """
-        SELECT categoryID, categoryName, description
-        FROM Categories;
-        """
-        cursor = db.execute_query(db_connection=db_connection, query=query)
-        results = cursor.fetchall()
-        return render_template("categories.j2", categories=results)
+        try:
+            # Select necessary columns for categories
+            query = """
+            SELECT categoryID, categoryName, description
+            FROM Categories;
+            """
+            cursor = db.execute_query(db_connection=db_connection, query=query)
+            results = cursor.fetchall()
+            return render_template("categories.j2", categories=results)
+        except:
+            print("ERROR")
+        finally:
+            cursor.close()
 
     if request.method == "POST":
         if request.form.get("Add_Category"):
@@ -262,26 +246,31 @@ def edit_category(categoryID):
 def orders():
     # Write the query and save it to a variable
     if request.method == "GET":
-        query = "SELECT * FROM Orders"
-        cursor = db.execute_query(db_connection=db_connection, query=query)
+        try: 
+            query = "SELECT * FROM Orders"
+            cursor = db.execute_query(db_connection=db_connection, query=query)
 
-        # The cursor.fetchall() function tells the cursor object to return all
-        # the results from the previously executed
-        results = cursor.fetchall()
+            # The cursor.fetchall() function tells the cursor object to return all
+            # the results from the previously executed
+            results = cursor.fetchall()
 
-        
-        # Query to grab customer ID's for dropdown.
-        query2 = "SELECT customerID from Customers"
-        cursor = db.execute_query(db_connection=db_connection, query=query2)
-        customerid_data = cursor.fetchall()
+            
+            # Query to grab customer ID's for dropdown.
+            query2 = "SELECT customerID from Customers"
+            cursor = db.execute_query(db_connection=db_connection, query=query2)
+            customerid_data = cursor.fetchall()
 
-        
-        # Sends the results back to the web browser.
-        return render_template("orders.j2", orders = results, customers = customerid_data)
-        
-        # For testing purposes to see json.
-        # results = json.dumps(cursor.fetchall())
-        # return results
+            
+            # Sends the results back to the web browser.
+            return render_template("orders.j2", orders = results, customers = customerid_data)
+            
+            # For testing purposes to see json.
+            # results = json.dumps(cursor.fetchall())
+            # return results
+        except:
+            print("ERROR")
+        finally:
+            cursor.close()
 
     if request.method == "POST":
         # runs if user presses add button
@@ -338,29 +327,34 @@ def edit_order(orderID):
 def orderdetails():
     # Write the query and save it to a variable
     if request.method == "GET":
-        query = "SELECT * FROM OrderDetails"
-        cursor = db.execute_query(db_connection=db_connection, query=query)
+        try: 
+            query = "SELECT * FROM OrderDetails"
+            cursor = db.execute_query(db_connection=db_connection, query=query)
 
-        # The cursor.fetchall() function tells the cursor object to return all
-        # the results from the previously executed
-        results = cursor.fetchall()
-        
-        # Query to grab order ID for dropdown.
-        query2 = "SELECT orderID from Orders"
-        cursor = db.execute_query(db_connection=db_connection, query=query2)
-        order_data = cursor.fetchall()
-        
-        # Query to grab game ID for dropdown.
-        query3 = "SELECT gameID from BoardGames"
-        cursor = db.execute_query(db_connection=db_connection, query=query3)
-        game_data = cursor.fetchall()
+            # The cursor.fetchall() function tells the cursor object to return all
+            # the results from the previously executed
+            results = cursor.fetchall()
+            
+            # Query to grab order ID for dropdown.
+            query2 = "SELECT orderID from Orders"
+            cursor = db.execute_query(db_connection=db_connection, query=query2)
+            order_data = cursor.fetchall()
+            
+            # Query to grab game ID for dropdown.
+            query3 = "SELECT gameID from BoardGames"
+            cursor = db.execute_query(db_connection=db_connection, query=query3)
+            game_data = cursor.fetchall()
 
-        # Sends the results back to the web browser.
-        return render_template("orderdetails.j2", orderdetails = results, orders = order_data, games = game_data)
-        
-        # For testing purposes to see json.
-        # results = json.dumps(cursor.fetchall())
-        # return results
+            # Sends the results back to the web browser.
+            return render_template("orderdetails.j2", orderdetails = results, orders = order_data, games = game_data)
+            
+            # For testing purposes to see json.
+            # results = json.dumps(cursor.fetchall())
+            # return results
+        except:
+            print("ERROR")
+        finally:
+            cursor.close()
 
     if request.method == "POST":
         # runs if user presses add button
@@ -416,7 +410,7 @@ def edit_orderdetail(orderDetailID):
 # Listener
 
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 33002)) 
+    port = int(os.environ.get('PORT', 57294)) 
     #                                 ^^^^
     #              You can replace this number with any valid port
     
