@@ -18,7 +18,13 @@
         <label>Title:</label>
         <input type="text" name="title" required>
         <label>Category ID:</label>
-        <input type="number" name="categoryID" required>
+        <select name="categoryID" id="addCategoryID" required>
+            {% if categories %}
+            {% for key in categories %}
+            <option value="{{key['categoryID']}}">{{key['categoryID']}}</option>
+            {% endfor %}
+            {% endif %}
+        </select>
         <label>Player Count:</label>
         <input type="number" name="playerCount" required>
         <label>Cost:</label>
