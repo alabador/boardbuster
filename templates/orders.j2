@@ -14,11 +14,11 @@
 
     <form id="add" action="/orders" method="POST">
         <h2>Add New Order</h2>
-        <label for="addOrderCustomer">Customer ID:</label>                
+        <label for="addOrderCustomer">Customer:</label>                
         <select name="customer" id="addOrderCustomer" required>
             {% if customers %}
             {% for key in customers %}
-            <option value="{{key['customerID']}}">{{key['customerID']}}</option>
+            <option value="{{key['customerID']}}">{{key['name']}}</option>
             {% endfor %}
             {% endif %}
         </select>
@@ -31,26 +31,20 @@
     <table>
         {% if orders %}
         <tr>
-            <!-- Iterate through each key in the first entry to get the
-            column name -->
-
-            {% for key in orders[0].keys() %}
-
-            <!-- Create a <th> tag with the key inside of it, this will be
-            our header row -->
-            <th>{{ key }}</th>
-
-            <!-- End of this for loop -->
-            {% endfor %}
+            <th>Order ID</th>
+            <th>Customer</th>
+            <th>Order Date</th>
+            <th>Amount</th>
 
             <!-- Extra header row for edit and delete buttons -->
-            <th></th>
+            <th>Actions</th>
         </tr>
         {% for order in orders %}
         <tr>
-            {% for key in order.keys() %}
-            <td>{{order[key]}}</td>
-            {% endfor %}
+            <td>{{order.orderID}}</td>
+            <td>{{order.name}}</td>
+            <td>{{order.orderDate}}</td>
+            <td>{{order.orderAmount}}</td>
             <td>
                 <a href="edit_order/{{order.orderID}}" class="btn">Edit</a>
                 <a href="delete_order/{{order.orderID}}" class="btn">Delete</a>

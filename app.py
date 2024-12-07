@@ -254,7 +254,12 @@ def orders():
     # Write the query and save it to a variable
     if request.method == "GET":
         try: 
-            query = "SELECT * FROM Orders"
+            query = """
+            SELECT Orders.*, Customers.name 
+            FROM Orders 
+            Join Customers 
+            WHERE (Orders.customerID = Customers.customerID);
+            """
             cursor = db.execute_query(db_connection=db_connection, query=query)
 
             # The cursor.fetchall() function tells the cursor object to return all
@@ -263,7 +268,7 @@ def orders():
 
             
             # Query to grab customer ID's for dropdown.
-            query2 = "SELECT customerID from Customers"
+            query2 = "SELECT customerID, name from Customers"
             cursor = db.execute_query(db_connection=db_connection, query=query2)
             customerid_data = cursor.fetchall()
 
@@ -308,7 +313,13 @@ def delete_order(orderID):
 @app.route("/edit_order/<int:orderID>", methods=["POST", "GET"])
 def edit_order(orderID):
     if request.method == "GET":
-        query = "SELECT * FROM Orders WHERE orderID = %s" % (orderID)
+        query = """
+        SELECT Orders.*, Customers.name 
+        FROM Orders 
+        Join Customers 
+        WHERE (Orders.customerID = Customers.customerID)
+        AND (Orders.orderID = %s);
+        """ % (orderID)
         cursor = db.execute_query(db_connection=db_connection, query=query)
         data = cursor.fetchall()
 
