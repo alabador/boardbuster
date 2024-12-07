@@ -99,6 +99,7 @@ def edit_customer(customerID):
         # redirect back to customers page
         return redirect("/customers")
 
+# Boardgames Routes
 @app.route('/boardgames', methods=["POST", "GET"])
 def boardgames():
     if request.method == "GET":
@@ -110,7 +111,13 @@ def boardgames():
             """
             cursor = db.execute_query(db_connection=db_connection, query=query)
             results = cursor.fetchall()
-            return render_template("boardgames.j2", boardgames=results)
+
+            # Query to grab customer ID's for dropdown.
+            query2 = "SELECT categoryID from Categories"
+            cursor = db.execute_query(db_connection=db_connection, query=query2)
+            categories_data = cursor.fetchall()
+
+            return render_template("boardgames.j2", boardgames=results, categories=categories_data)
         except:
             print("ERROR")
         finally:
