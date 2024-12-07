@@ -313,7 +313,13 @@ def delete_order(orderID):
 @app.route("/edit_order/<int:orderID>", methods=["POST", "GET"])
 def edit_order(orderID):
     if request.method == "GET":
-        query = "SELECT * FROM Orders WHERE orderID = %s" % (orderID)
+        query = """
+        SELECT Orders.*, Customers.name 
+        FROM Orders 
+        Join Customers 
+        WHERE (Orders.customerID = Customers.customerID)
+        AND (Orders.orderID = %s);
+        """ % (orderID)
         cursor = db.execute_query(db_connection=db_connection, query=query)
         data = cursor.fetchall()
 

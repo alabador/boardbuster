@@ -50,7 +50,7 @@
         <!-- Create hidden form input to store the passed 'id' of the person we are editing so we can access it easily in our 'POST' method in our app.py -->
         <input type="hidden" value="{{data[0].orderID}}" class="form-control" id="personID" name="orderID" required>
         <input type="hidden" value="{{data[0].customerID}}" class="form-control" id="personID" name="customerID" required>
-        <p>Customer ID: {{data[0].customerID}}</p>
+        <p>Customer: {{data[0].name}}</p>
 
         <label>Order Date:</label> <input type="date" name="orderDate" value="{{data[0].orderDate}}" required>
         <label>Order Amount:</label> <input type="number" step="0.01" name="orderAmount" value="{{data[0].orderAmount}}" required>
