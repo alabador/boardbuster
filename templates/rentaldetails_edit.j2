@@ -10,6 +10,31 @@
         {% include 'navbar.j2' %}
     </header>
 
+    <!-- Rental Details Table -->
+    <h2>Rental Detail Overview</h2>
+    <table>
+        {% if data %}
+        <thead>
+            <tr>
+                <th>Rental Detail ID</th>
+                <th>Rental ID</th>
+                <th>Game</th>
+                <th>Duration</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ data[0].rentalDetailID }}</td>
+                <td>{{ data[0].rentalID }}</td>
+                <td>{{ data[0].gameTitle }} (ID: {{ data[0].gameID }})</td>
+                <td>{{ data[0].rentalDuration }}</td>
+                <td>{{ data[0].rentalPrice }}</td>
+            </tr>
+        </tbody>
+        {% endif %}
+    </table>
+
     <h1>Edit Rental Detail</h1>
 
     <!-- Edit Rental Detail Form -->
@@ -30,7 +55,7 @@
         <select name="gameID" required>
             {% for game in games %}
             <option value="{{ game.gameID }}" {% if game.gameID == data[0].gameID %}selected{% endif %}>
-                Game: {{ game.title }} (ID: {{ game.gameID }})
+                {{ game.title }} (ID: {{ game.gameID }})
             </option>
             {% endfor %}
         </select>
