@@ -51,7 +51,7 @@ CREATE TABLE Orders (
     orderID INT PRIMARY KEY AUTO_INCREMENT,
     customerID INT NOT NULL,  -- Foreign key to Customers
     orderDate DATE NOT NULL,
-    orderAmount DECIMAL(8,2) NOT NULL,
+    orderAmount DECIMAL(8,2) DEFAULT 0.00,
     FOREIGN KEY (customerID) REFERENCES Customers(customerID) ON DELETE CASCADE
 );
 
@@ -61,7 +61,6 @@ CREATE TABLE OrderDetails (
     orderID INT NOT NULL,  -- Foreign key to Orders
     gameID INT NOT NULL,    -- Foreign key to BoardGames
     quantity INT NOT NULL,
-    price DECIMAL(8,2) NOT NULL,
     FOREIGN KEY (orderID) REFERENCES Orders(orderID) ON DELETE CASCADE,
     FOREIGN KEY (gameID) REFERENCES BoardGames(gameID) ON DELETE CASCADE
 );
