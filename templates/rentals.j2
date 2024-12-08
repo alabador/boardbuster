@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BoardBuster - Manage Rentals</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <header>
+        {% include 'navbar.j2' %}
+    </header>
+
+    <h1>Manage Rentals</h1>
+
+    <!-- Add New Rental Form -->
+    <form method="POST">
+        <h2>Add New Rental</h2>
+        <label>Customer:</label>
+        <select name="customerID" required>
+            {% for customer in customers %}
+            <option value="{{ customer.customerID }}">{{ customer.name }} (ID: {{ customer.customerID }})</option>
+            {% endfor %}
+        </select>
+        <label>Rental Date:</label>
+        <input type="date" name="rentalDate" required>
+        <label>Return Date (optional):</label>
+        <input type="date" name="returnDate">
+        <label>Rental Cost:</label>
+        <input type="number" step="0.01" name="rentalCost" required>
+        <input type="submit" value="Add Rental" name="Add_Rental" class="btn">
+    </form>
+
+    <!-- Rentals Table -->
+    <h2>Rentals</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Rental ID</th>
+                <th>Customer ID</th>
+                <th>Rental Date</th>
+                <th>Return Date</th>
+                <th>Rental Cost</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for rental in rentals %}
+            <tr>
+                <td>{{ rental.rentalID }}</td>
+                <td>{{ rental.customerID }}</td>
+                <td>{{ rental.rentalDate }}</td>
+                <td>{{ rental.returnDate or 'N/A' }}</td>
+                <td>{{ rental.rentalCost }}</td>
+                <td>
+                    <a href="/edit_rental/{{ rental.rentalID }}">Edit</a>
+                    <a href="/delete_rental/{{ rental.rentalID }}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <footer>
+        <p>© 2024 Austin Labador & Vincent Le</p>
+    </footer>
+</body>
+</html>

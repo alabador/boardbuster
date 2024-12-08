@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BoardBuster - Edit Rental</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <header>
+        {% include 'navbar.j2' %}
+    </header>
+
+    <h1>Edit Rental</h1>
+
+    <!-- Rental Details Table -->
+    <table>
+        {% if data %}
+        <thead>
+            <tr>
+                {% for key in data[0].keys() %}
+                <th data-field="{{ key }}">{{ key }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for rental in data %}
+            <tr>
+                {% for key in rental.keys() %}
+                <td>{{ rental[key] }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+        {% endif %}
+    </table>
+
+    <!-- Edit Form -->
+    <form method="POST">
+        <h2>Edit Rental</h2>
+        <input type="hidden" value="{{ data[0].rentalID }}" name="rentalID" required>
+        <label>Customer:</label>
+        <select name="customerID" required>
+            {% for customer in customers %}
+            <option value="{{ customer.customerID }}" {% if customer.customerID == data[0].customerID %}selected{% endif %}>
+                {{ customer.name }} (ID: {{ customer.customerID }})
+            </option>
+            {% endfor %}
+        </select>
+        <label>Rental Date:</label>
+        <input type="date" value="{{ data[0].rentalDate }}" name="rentalDate" required>
+        <label>Return Date (optional):</label>
+        <input type="date" value="{{ data[0].returnDate }}" name="returnDate">
+        <label>Rental Cost:</label>
+        <input type="number" step="0.01" value="{{ data[0].rentalCost }}" name="rentalCost" required>
+        <input type="submit" value="Edit Rental" name="Edit_Rental" class="btn">
+        <a href="/rentals" class="btn">Cancel</a>
+    </form>
+
+    <footer>
+        <p>© 2024 Austin Labador & Vincent Le</p>
+    </footer>
+</body>
+</html>

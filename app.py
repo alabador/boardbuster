@@ -424,6 +424,96 @@ def edit_orderdetail(orderDetailID):
             cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(orderID, gameID, quantity, price, orderDetailID))
             results = cursor.fetchall()
         return redirect("/orderdetails")
+    
+@app.route('/rentals', methods=["POST", "GET"])
+def rentals():
+    if request.method == "GET":
+        try:
+            # Select necessary columns for rentals
+            query = """
+            SELECT rentalID, customerID, rentalDate, returnDate, rentalCost
+            FROM Rentals;
+            """
+            cursor = db.execute_query(db_connection=db_connection, query=query)
+            results = cursor.fetchall()
+
+            # Query to grab customer IDs for dropdown
+            query2 = "SELECT customerID, name FROM Customers;"
+            cursor = db.execute_query(db_connection=db_connection, query=query2)
+            customers_data = cursor.fetchall()
+
+            return render_template("rentals.j2", rentals=results, customers=customers_data)
+        except Exception as e:
+            print(f"Error fetching rentals: {e}")
+        finally:
+            cursor.close()
+
+    if request.method == "POST":
+        if request.form.get("Add_Rental"):
+            # Retrieve form data
+            customerID = request.form["customerID"]
+            rentalDate = request.form["rentalDate"]
+            returnDate = request.form.get("returnDate") or None  # Set to None if empty
+            rentalCost = request.form["rentalCost"]
+
+            # Insert new rental
+            query = """
+            INSERT INTO Rentals (customerID, rentalDate, returnDate, rentalCost)
+            VALUES (%s, %s, %s, %s);
+            """
+            db.execute_query(db_connection=db_connection, query=query, query_params=(customerID, rentalDate, returnDate, rentalCost))
+        return redirect("/rentals")
+
+
+@app.route("/delete_rental/<int:rentalID>")
+def delete_rental(rentalID):
+    # Delete the rental by its ID
+    query = "DELETE FROM Rentals WHERE rentalID = %s;"
+    db.execute_query(db_connection=db_connection, query=query, query_params=(rentalID,))
+    return redirect("/rentals")
+
+
+@app.route("/edit_rental/<int:rentalID>", methods=["POST", "GET"])
+def edit_rental(rentalID):
+    if request.method == "GET":
+        try:
+            # Fetch the specific rental for editing
+            query = """
+            SELECT rentalID, customerID, rentalDate, returnDate, rentalCost
+            FROM Rentals
+            WHERE rentalID = %s;
+            """
+            cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(rentalID,))
+            data = cursor.fetchall()
+
+            # Query to grab customer IDs for dropdown
+            query2 = "SELECT customerID, name FROM Customers;"
+            cursor = db.execute_query(db_connection=db_connection, query=query2)
+            customers_data = cursor.fetchall()
+
+            return render_template("rentals_edit.j2", data=data, customers=customers_data)
+        except Exception as e:
+            print(f"Error fetching rental for editing: {e}")
+        finally:
+            cursor.close()
+
+    if request.method == "POST":
+        if request.form.get("Edit_Rental"):
+            # Retrieve updated form data
+            rentalID = request.form["rentalID"]
+            customerID = request.form["customerID"]
+            rentalDate = request.form["rentalDate"]
+            returnDate = request.form.get("returnDate") or None  # Set to None if empty
+            rentalCost = request.form["rentalCost"]
+
+            # Update rental details
+            query = """
+            UPDATE Rentals
+            SET customerID = %s, rentalDate = %s, returnDate = %s, rentalCost = %s
+            WHERE rentalID = %s;
+            """
+            db.execute_query(db_connection=db_connection, query=query, query_params=(customerID, rentalDate, returnDate, rentalCost, rentalID))
+        return redirect("/rentals")
 
 # Listener
 
