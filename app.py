@@ -403,8 +403,8 @@ def orderdetails():
         # redirect back to customers page
         return redirect("/orderdetails")
 
-@app.route("/delete_orderdetail/<int:orderDetailID>")
-def delete_orderdetail(orderDetailID):
+@app.route("/delete_orderdetail/<int:orderDetailID>/<int:orderID>")
+def delete_orderdetail(orderDetailID, orderID):
 
     #mySQL query to delete the orderDetail with passed ID
     query = "DELETE FROM OrderDetails WHERE orderDetailID = '%s';"
@@ -420,7 +420,7 @@ def delete_orderdetail(orderDetailID):
         WHERE OrderDetails.orderID = Orders.orderID
     )
     WHERE Orders.orderID = %s
-    """ % (orderDetailID)
+    """ % (orderID)
     cursor = db.execute_query(db_connection=db_connection, query=update_totalprice)
 
     return redirect("/orderdetails")
