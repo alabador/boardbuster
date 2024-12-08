@@ -290,11 +290,10 @@ def orders():
             # grabs user form inputs
             customer = request.form["customer"]
             orderDate = request.form["orderDate"]
-            orderAmount = request.form["orderAmount"]
 
             # no null inputs
-            query = "INSERT INTO Orders (customerID, orderDate, orderAmount) VALUES (%s, %s, %s)"
-            cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(customer,orderDate,orderAmount))
+            query = "INSERT INTO Orders (customerID, orderDate) VALUES (%s, %s)"
+            cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(customer,orderDate))
             results = cursor.fetchall()
             
 
@@ -380,25 +379,52 @@ def orderdetails():
             # grabs user form inputs
             order = request.form["order"]
             game = request.form["game"]
-            price = request.form["price"]
             quantity = request.form["quantity"]
 
             # no null inputs
-            query = "INSERT INTO OrderDetails (orderID, gameID, quantity, price) VALUES (%s, %s, %s, %s)"
-            cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(order,game,quantity,price))
+            query = "INSERT INTO OrderDetails (orderID, gameID, quantity) VALUES (%s, %s, %s)"
+            cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(order,game,quantity))
+
+            # Updates the orders entry with total price.
+            update_totalprice = """
+            UPDATE Orders
+            SET Orders.orderAmount = (
+                SELECT SUM(BoardGames.gameCost * OrderDetails.quantity)
+                FROM OrderDetails
+                JOIN BoardGames ON OrderDetails.gameID = BoardGames.gameID
+                WHERE OrderDetails.orderID = Orders.orderID
+            )
+            WHERE Orders.orderID = %s
+            """ % (order)
+            cursor = db.execute_query(db_connection=db_connection, query=update_totalprice)
             results = cursor.fetchall()
             
 
         # redirect back to customers page
         return redirect("/orderdetails")
 
-@app.route("/delete_orderdetail/<int:orderDetailID>")
-def delete_orderdetail(orderDetailID):
+@app.route("/delete_orderdetail/<int:orderDetailID>/<int:orderID>")
+def delete_orderdetail(orderDetailID, orderID):
+
     #mySQL query to delete the orderDetail with passed ID
     query = "DELETE FROM OrderDetails WHERE orderDetailID = '%s';"
     cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(orderDetailID,)) #keep comma, required idk why
-   
+
+
+    update_totalprice = """
+    UPDATE Orders
+    SET Orders.orderAmount = (
+        SELECT IFNULL(SUM(BoardGames.gameCost * OrderDetails.quantity), 0)
+        FROM OrderDetails
+        JOIN BoardGames ON OrderDetails.gameID = BoardGames.gameID
+        WHERE OrderDetails.orderID = Orders.orderID
+    )
+    WHERE Orders.orderID = %s
+    """ % (orderID)
+    cursor = db.execute_query(db_connection=db_connection, query=update_totalprice)
+
     return redirect("/orderdetails")
+
 
 @app.route("/edit_orderdetail/<int:orderDetailID>", methods=["POST", "GET"])
 def edit_orderdetail(orderDetailID):

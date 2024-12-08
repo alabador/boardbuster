@@ -29,8 +29,7 @@
             {% endfor %}
             {% endif %}
         </select>
-        <label>Price</label> <input type="number" step="0.01" name="price" required>
-        <label>Quantity:</label> <input type="number" step="1" min="0" name="quantity" required>
+        <label>Quantity:</label> <input type="number" step="1" min="1" name="quantity" required>
         <input type="submit" value="Add Order Detail" name="Add_Order_Detail" class="btn">
     </form>
 
@@ -60,7 +59,7 @@
             {% endfor %}
             <td>
                 <a href="edit_orderdetail/{{detail.orderDetailID}}" class="btn">Edit</a>
-                <a href="delete_orderdetail/{{detail.orderDetailID}}" class="btn">Delete</a>
+                <a href="delete_orderdetail/{{detail.orderDetailID}}/{{detail.orderID}}" class="btn">Delete</a>
             </td>
         </tr>
         {% endfor %}
