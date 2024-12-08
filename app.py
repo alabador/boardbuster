@@ -431,8 +431,10 @@ def rentals():
         try:
             # Select necessary columns for rentals
             query = """
-            SELECT rentalID, customerID, rentalDate, returnDate, rentalCost
-            FROM Rentals;
+            SELECT Rentals.rentalID, Rentals.customerID, Rentals.rentalDate, Rentals.returnDate, Rentals.rentalCost, Customers.name AS customerName
+            FROM Rentals
+            LEFT JOIN Customers ON Rentals.customerID = Customers.customerID;
+
             """
             cursor = db.execute_query(db_connection=db_connection, query=query)
             results = cursor.fetchall()

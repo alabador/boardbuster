@@ -12,24 +12,27 @@
 
     <h1>Edit Rental</h1>
 
-    <!-- Rental Details Table -->
+    <!-- Rental Overview Table -->
+    <h2>Rental Overview</h2>
     <table>
         {% if data %}
         <thead>
             <tr>
-                {% for key in data[0].keys() %}
-                <th data-field="{{ key }}">{{ key }}</th>
-                {% endfor %}
+                <th>Rental ID</th>
+                <th>Customer</th>
+                <th>Rental Date</th>
+                <th>Return Date</th>
+                <th>Rental Cost</th>
             </tr>
         </thead>
         <tbody>
-            {% for rental in data %}
             <tr>
-                {% for key in rental.keys() %}
-                <td>{{ rental[key] }}</td>
-                {% endfor %}
+                <td>{{ data[0].rentalID }}</td>
+                <td>Customer: {{ data[0].customerName }} (ID: {{ data[0].customerID }})</td>
+                <td>{{ data[0].rentalDate }}</td>
+                <td>{{ data[0].returnDate or 'Not Returned' }}</td>
+                <td>{{ data[0].rentalCost }}</td>
             </tr>
-            {% endfor %}
         </tbody>
         {% endif %}
     </table>
