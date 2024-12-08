@@ -331,11 +331,10 @@ def edit_order(orderID):
             orderID = request.form["orderID"]
             customerID = request.form["customerID"]
             orderDate = request.form["orderDate"]
-            orderAmount = request.form["orderAmount"]
 
             # no null inputs
-            query = "UPDATE Orders SET Orders.customerID = %s, Orders.orderDate = %s, Orders.orderAmount = %s WHERE Orders.orderID = %s;"
-            cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(customerID, orderDate, orderAmount, orderID))
+            query = "UPDATE Orders SET Orders.customerID = %s, Orders.orderDate = %s WHERE Orders.orderID = %s;"
+            cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(customerID, orderDate, orderID))
             results = cursor.fetchall()
         return redirect("/orders")
 
@@ -442,12 +441,11 @@ def edit_orderdetail(orderDetailID):
             orderDetailID = request.form["orderDetailID"]
             orderID = request.form["orderID"]
             gameID = request.form["gameID"]
-            price = request.form["price"]
             quantity = request.form["quantity"]
 
             # no null inputs
-            query = "UPDATE OrderDetails SET OrderDetails.orderID = %s, OrderDetails.gameID = %s, OrderDetails.quantity = %s, OrderDetails.price = %s WHERE OrderDetails.orderDetailID = %s;"
-            cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(orderID, gameID, quantity, price, orderDetailID))
+            query = "UPDATE OrderDetails SET OrderDetails.orderID = %s, OrderDetails.gameID = %s, OrderDetails.quantity = %s WHERE OrderDetails.orderDetailID = %s;"
+            cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(orderID, gameID, quantity, orderDetailID))
             results = cursor.fetchall()
         return redirect("/orderdetails")
     
