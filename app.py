@@ -347,17 +347,23 @@ def delete_order(orderID):
 @app.route("/edit_order/<int:orderID>", methods=["POST", "GET"])
 def edit_order(orderID):
     if request.method == "GET":
+        # Fetch the specific order for editing
         query = """
-        SELECT Orders.*, Customers.name 
-        FROM Orders 
-        Join Customers 
-        WHERE (Orders.customerID = Customers.customerID)
-        AND (Orders.orderID = %s);
-        """ % (orderID)
-        cursor = db.execute_query(db_connection=db_connection, query=query)
+        SELECT Orders.orderID, Orders.customerID, Orders.orderDate, Orders.orderAmount, Customers.name
+        FROM Orders
+        JOIN Customers ON Orders.customerID = Customers.customerID
+        WHERE Orders.orderID = %s;
+        """
+        cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(orderID,))
         data = cursor.fetchall()
 
-        return render_template("orders_edit.j2", data=data)
+        # Query to grab all customers for the dropdown
+        query2 = "SELECT customerID, name FROM Customers;"
+        cursor = db.execute_query(db_connection=db_connection, query=query2)
+        customers_data = cursor.fetchall()
+
+        return render_template("orders_edit.j2", data=data, customers=customers_data)
+        
     
     if request.method == "POST":
         # runs if user presses 'Edit Customer' button
