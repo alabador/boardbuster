@@ -22,10 +22,10 @@
             {% endif %}
         </select>
         <label for="addGameID">Game:</label>                
-        <select name="game" id="addgameID" required>
+        <select name="game" id="addGameID" required>
             {% if games %}
             {% for game in games %}
-            <option value="{{game.gameID}}">{{game.title}}</option>
+            <option value="{{game.gameID}}">{{game.title}} (ID: {{game.gameID}})</option>
             {% endfor %}
             {% endif %}
         </select>
@@ -49,7 +49,7 @@
         <tr>
             <td>{{detail.orderDetailID}}</td>
             <td>{{detail.name}} (Order ID: {{detail.orderID}})</td>
-            <td>{{detail.title}}</td>
+            <td>{{detail.title}} (ID: {{detail.gameID}})</td>
             <td>{{detail.quantity}}</td>
             <td>
                 <a href="edit_orderdetail/{{detail.orderDetailID}}" class="btn">Edit</a>
