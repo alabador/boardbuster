@@ -363,7 +363,17 @@ def orderdetails():
     # Write the query and save it to a variable
     if request.method == "GET":
         try: 
-            query = "SELECT * FROM OrderDetails"
+            query = """
+            SELECT OrderDetails.*, BoardGames.title, Customers.name
+            FROM OrderDetails 
+            Join BoardGames 
+            ON (OrderDetails.gameID = BoardGames.gameID)
+            JOIN Orders
+            ON (Orders.orderID = OrderDetails.orderID)
+            JOIN Customers
+            ON (Customers.customerID = Orders.customerID);
+            """
+
             cursor = db.execute_query(db_connection=db_connection, query=query)
 
             # The cursor.fetchall() function tells the cursor object to return all
@@ -371,15 +381,20 @@ def orderdetails():
             results = cursor.fetchall()
             
             # Query to grab order ID for dropdown.
-            query2 = "SELECT orderID from Orders"
+            query2 = """
+            SELECT orderID, Orders.customerID, name 
+            FROM Orders 
+            JOIN Customers 
+            ON Orders.customerID = Customers.customerID;
+            """
             cursor = db.execute_query(db_connection=db_connection, query=query2)
             order_data = cursor.fetchall()
             
             # Query to grab game ID for dropdown.
-            query3 = "SELECT gameID from BoardGames"
+            query3 = "SELECT gameID, title from BoardGames"
             cursor = db.execute_query(db_connection=db_connection, query=query3)
             game_data = cursor.fetchall()
-
+            
             # Sends the results back to the web browser.
             return render_template("orderdetails.j2", orderdetails = results, orders = order_data, games = game_data)
             

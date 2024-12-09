@@ -16,16 +16,16 @@
         <label for="addOrderID">Order ID:</label>                
         <select name="order" id="addOrderID" required>
             {% if orders %}
-            {% for key in orders %}
-            <option value="{{key['orderID']}}">{{key['orderID']}}</option>
+            {% for order in orders %}
+            <option value="{{order.orderID}}">{{order.name}} (Order ID: {{order.orderID}})</option>
             {% endfor %}
             {% endif %}
         </select>
         <label for="addGameID">Game ID:</label>                
         <select name="game" id="addgameID" required>
             {% if games %}
-            {% for key in games %}
-            <option value="{{key['gameID']}}">{{key['gameID']}}</option>
+            {% for game in games %}
+            <option value="{{game.gameID}}">{{game.title}}</option>
             {% endfor %}
             {% endif %}
         </select>
@@ -37,26 +37,20 @@
     <table>
         {% if orderdetails %}
         <tr>
-            <!-- Iterate through each key in the first entry to get the
-            column name -->
-
-            {% for key in orderdetails[0].keys() %}
-
-            <!-- Create a <th> tag with the key inside of it, this will be
-            our header row -->
-            <th>{{ key }}</th>
-
-            <!-- End of this for loop -->
-            {% endfor %}
+            <th>Order Detail ID</th>
+            <th>Order ID</th>
+            <th>Game</th>
+            <th>Quantity</th>
 
             <!-- Extra header row for edit and delete buttons -->
-            <th></th>
+            <th>Actions</th>
         </tr>
         {% for detail in orderdetails %}
         <tr>
-            {% for key in detail.keys() %}
-            <td>{{detail[key]}}</td>
-            {% endfor %}
+            <td>{{detail.orderDetailID}}</td>
+            <td>{{detail.name}} (Order ID: {{detail.orderID}})</td>
+            <td>{{detail.title}}</td>
+            <td>{{detail.quantity}}</td>
             <td>
                 <a href="edit_orderdetail/{{detail.orderDetailID}}" class="btn">Edit</a>
                 <a href="delete_orderdetail/{{detail.orderDetailID}}/{{detail.orderID}}" class="btn">Delete</a>
