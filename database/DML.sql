@@ -4,80 +4,144 @@
 SELECT * FROM Customers;
 
 -- Insert (Add New Customer)
-INSERT INTO Customers (name, email, phone) VALUES (?, ?, ?);
+INSERT INTO Customers (name, email, phone) 
+VALUES (?, ?, ?);
 
 -- Update (Modify Existing Customer)
-UPDATE Customers SET name = ?, email = ?, phone = ? WHERE customerID = ?;
+UPDATE Customers 
+SET name = ?, email = ?, phone = ? 
+WHERE customerID = ?;
 
 -- Delete (Remove Customer)
-DELETE FROM Customers WHERE customerID = ?;
+DELETE FROM Customers 
+WHERE customerID = ?;
+
 
 -- BoardGames CRUD Operations
 
--- Select (View All Board Games)
-SELECT * FROM BoardGames;
+-- Select (View All Board Games with Categories)
+SELECT BoardGames.gameID, BoardGames.title, Categories.categoryName, 
+       BoardGames.playerCount, BoardGames.gameCost, BoardGames.quantity
+FROM BoardGames
+JOIN Categories ON BoardGames.categoryID = Categories.categoryID;
 
 -- Insert (Add New Board Game)
-INSERT INTO BoardGames (title, categoryID, playerCount, gameCost, isAvailable, quantity) VALUES (?, ?, ?, ?, ?, ?);
+INSERT INTO BoardGames (title, categoryID, playerCount, gameCost, quantity) 
+VALUES (?, ?, ?, ?, ?);
 
 -- Update (Modify Existing Board Game)
-UPDATE BoardGames SET title = ?, categoryID = ?, playerCount = ?, gameCost = ?, isAvailable = ?, quantity = ? WHERE gameID = ?;
+UPDATE BoardGames 
+SET title = ?, categoryID = ?, playerCount = ?, gameCost = ?, quantity = ? 
+WHERE gameID = ?;
 
 -- Delete (Remove Board Game)
-DELETE FROM BoardGames WHERE gameID = ?;
+DELETE FROM BoardGames 
+WHERE gameID = ?;
+
+
+-- Categories CRUD Operations
+
+-- Select (View All Categories)
+SELECT categoryID, categoryName, description 
+FROM Categories;
+
+-- Insert (Add New Category)
+INSERT INTO Categories (categoryName, description) 
+VALUES (?, ?);
+
+-- Update (Modify Existing Category)
+UPDATE Categories 
+SET categoryName = ?, description = ? 
+WHERE categoryID = ?;
+
+-- Delete (Remove Category)
+DELETE FROM Categories 
+WHERE categoryID = ?;
+
 
 -- Orders CRUD Operations
 
--- Select (View All Orders)
-SELECT * FROM Orders;
+-- Select (View All Orders with Customer Names)
+SELECT Orders.orderID, Orders.customerID, Orders.orderDate, Orders.orderAmount, Customers.name
+FROM Orders
+JOIN Customers ON Orders.customerID = Customers.customerID;
 
 -- Insert (Add New Order)
-INSERT INTO Orders (customerID, orderDate, orderAmount) VALUES (?, ?, ?);
+INSERT INTO Orders (customerID, orderDate) 
+VALUES (?, ?);
 
 -- Update (Modify Existing Order)
-UPDATE Orders SET customerID = ?, orderDate = ?, orderAmount = ? WHERE orderID = ?;
+UPDATE Orders 
+SET orderDate = ? 
+WHERE orderID = ?;
 
 -- Delete (Remove Order)
-DELETE FROM Orders WHERE orderID = ?;
+DELETE FROM Orders 
+WHERE orderID = ?;
+
 
 -- OrderDetails CRUD Operations
 
--- Select (View All Order Details)
-SELECT * FROM OrderDetails;
+-- Select (View All Order Details with Games and Customer Names)
+SELECT OrderDetails.orderDetailID, OrderDetails.orderID, OrderDetails.gameID, 
+       OrderDetails.quantity, BoardGames.title, Customers.name
+FROM OrderDetails
+JOIN BoardGames ON OrderDetails.gameID = BoardGames.gameID
+JOIN Orders ON OrderDetails.orderID = Orders.orderID
+JOIN Customers ON Orders.customerID = Customers.customerID;
 
 -- Insert (Add New Order Detail)
-INSERT INTO OrderDetails (orderID, gameID, quantity, price) VALUES (?, ?, ?, ?);
+INSERT INTO OrderDetails (orderID, gameID, quantity) 
+VALUES (?, ?, ?);
 
 -- Update (Modify Existing Order Detail)
-UPDATE OrderDetails SET orderID = ?, gameID = ?, quantity = ?, price = ? WHERE orderDetailID = ?;
+UPDATE OrderDetails 
+SET orderID = ?, gameID = ?, quantity = ? 
+WHERE orderDetailID = ?;
 
 -- Delete (Remove Order Detail)
-DELETE FROM OrderDetails WHERE orderDetailID = ?;
+DELETE FROM OrderDetails 
+WHERE orderDetailID = ?;
+
 
 -- Rentals CRUD Operations
 
--- Select (View All Rentals)
-SELECT * FROM Rentals;
+-- Select (View All Rentals with Customer Names)
+SELECT Rentals.rentalID, Rentals.customerID, Rentals.rentalDate, Rentals.returnDate, Rentals.rentalCost, Customers.name
+FROM Rentals
+JOIN Customers ON Rentals.customerID = Customers.customerID;
 
 -- Insert (Add New Rental)
-INSERT INTO Rentals (customerID, rentalDate, returnDate, rentalCost) VALUES (?, ?, ?, ?);
+INSERT INTO Rentals (customerID, rentalDate, returnDate, rentalCost) 
+VALUES (?, ?, ?, ?);
 
 -- Update (Modify Existing Rental)
-UPDATE Rentals SET customerID = ?, rentalDate = ?, returnDate = ?, rentalCost = ? WHERE rentalID = ?;
+UPDATE Rentals 
+SET customerID = ?, rentalDate = ?, returnDate = ?, rentalCost = ? 
+WHERE rentalID = ?;
 
 -- Delete (Remove Rental)
-DELETE FROM Rentals WHERE rentalID = ?;
+DELETE FROM Rentals 
+WHERE rentalID = ?;
+
 
 -- RentalDetails CRUD Operations
 
--- Select (View All Rental Details)
-SELECT * FROM RentalDetails;
+-- Select (View All Rental Details with Game Titles)
+SELECT RentalDetails.rentalDetailID, RentalDetails.rentalID, RentalDetails.gameID, 
+       RentalDetails.rentalDuration, RentalDetails.rentalPrice, BoardGames.title
+FROM RentalDetails
+JOIN BoardGames ON RentalDetails.gameID = BoardGames.gameID;
 
 -- Insert (Add New Rental Detail)
-INSERT INTO RentalDetails (rentalID, gameID, rentalDuration, rentalPrice) VALUES (?, ? , ?, ?);
+INSERT INTO RentalDetails (rentalID, gameID, rentalDuration, rentalPrice) 
+VALUES (?, ?, ?, ?);
 
 -- Update (Modify Existing Rental Detail)
-UPDATE RentalDetails SET rentalID = ?, gameID = ?, rentalDuration = ?, rentalPrice = ? WHERE rentalDetailID = ?;
+UPDATE RentalDetails 
+SET rentalID = ?, gameID = ?, rentalDuration = ?, rentalPrice = ? 
+WHERE rentalDetailID = ?;
 
 -- Delete (Remove Rental Detail)
-DELETE FROM RentalDetails WHERE rentalDetailID = ?;
+DELETE FROM RentalDetails 
+WHERE rentalDetailID = ?;
