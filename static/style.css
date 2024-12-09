@@ -138,6 +138,12 @@ form input,select {
     font-family: 'Rubik', 'Sans-Serif';
 }
 
+a.btn {
+    padding: 8px;
+    display: inline-block;
+    margin: 1px;
+}
+
 
 /* Breakpoints 
 
