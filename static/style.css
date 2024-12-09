@@ -45,6 +45,7 @@ body {
 }
 
 main {
+    padding-top:2rem;
     flex-grow: 1;
 }
 
@@ -52,6 +53,7 @@ footer *{
     text-align: center;
     padding: 2rem;
 }
+
 
 /* Fonts */
 h1 {
@@ -142,6 +144,8 @@ a.btn {
     padding: 8px;
     display: inline-block;
     margin: 1px;
+    text-align:center;
+    text-decoration: none;
 }
 
 
