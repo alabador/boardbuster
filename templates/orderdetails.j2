@@ -10,9 +10,9 @@
         {% include 'navbar.j2' %}
     </header>
 
-    <h1>Order Details</h1>
+    <h1>Manage Order Details</h1>
     <form id="add" action="/orderdetails" method="POST">
-        <h2>Add New Order Item</h2>
+        <h2>Add New Order Detail</h2>
         <label for="addOrderID">Order ID:</label>                
         <select name="order" id="addOrderID" required>
             {% if orders %}
@@ -33,7 +33,7 @@
         <input type="submit" value="Add Order Detail" name="Add_Order_Detail" class="btn">
     </form>
 
-    <h2>Existing Orders</h2>
+    <h2>Order Details</h2>
     <table>
         {% if orderdetails %}
         <tr>
