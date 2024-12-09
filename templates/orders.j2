@@ -25,33 +25,35 @@
         <label>Order Date:</label> <input type="date" name="orderDate" required>
         <input type="submit" value="Add Order" name="Add_Order" class="btn">
     </form>
+    
+    <section class="table-container">
+        <h2>Orders</h2>
+        <table>
+            {% if orders %}
+            <tr class="theader">
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Order Date</th>
+                <th>Amount</th>
 
-    <h2>Orders</h2>
-    <table>
-        {% if orders %}
-        <tr>
-            <th>Order ID</th>
-            <th>Customer</th>
-            <th>Order Date</th>
-            <th>Amount</th>
-
-            <!-- Extra header row for edit and delete buttons -->
-            <th>Actions</th>
-        </tr>
-        {% for order in orders %}
-        <tr>
-            <td>{{order.orderID}}</td>
-            <td>{{order.name}} (ID: {{order.customerID}})</td>
-            <td>{{order.orderDate}}</td>
-            <td>{{order.orderAmount}}</td>
-            <td>
-                <a href="edit_order/{{order.orderID}}" class="btn">Edit</a>
-                <a href="delete_order/{{order.orderID}}" class="btn">Delete</a>
-            </td>
-        </tr>
-        {% endfor %}
-        {% endif %}
-    </table>
+                <!-- Extra header row for edit and delete buttons -->
+                <th>Actions</th>
+            </tr>
+            {% for order in orders %}
+            <tr>
+                <td>{{order.orderID}}</td>
+                <td>{{order.name}} (ID: {{order.customerID}})</td>
+                <td>{{order.orderDate}}</td>
+                <td>{{order.orderAmount}}</td>
+                <td>
+                    <a href="edit_order/{{order.orderID}}" class="btn">Edit</a>
+                    <a href="delete_order/{{order.orderID}}" class="btn">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+        </table>
+    </section>
 
     <footer>
         <p>© 2024 Austin Labador & Vincent Le</p>

@@ -1,22 +1,129 @@
+/* Imports */
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Bubbles&family=Rubik:ital,wght@0,300..900;1,300..900&family=Teko:wght@300..700&display=swap');
+
+/* Variables */
+:root {
+    --bg-color: #F4F4FB;
+    --bg-table-container: #ffffff;
+    --bg-table-header: #e6e6e7
+}
+
+/* CSS RESET */
+html {
+    box-sizing: border-box;
+    font-family: 'Rubik', 'Sans-Serif';
+}
+  
+* {
+    box-sizing: border-box;
+}
+
+body, h1, h2, h3, h4, h5, h6, p, ol, ul {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+}
+
+ol, ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* STYLES */
+
+body {
+    margin: 0 auto;
+}
+
+
+/* Fonts */
+h1 {
+    font-size: 32px;
+    font-weight: 800px;
+}
+h2 {
+    font-size: 28px;
+    font-weight: 600px;
+}
+
+
+.table-container {
+    background-color: var(--bg-table-container);
+    padding: 2rem;
+    margin-top: 1rem;
+    border-radius: 16px;
+}
+.table-container h2 {
+    background-color: inherit;
+}
+
+
 table {
-    border: 1px solid;
     width: 100%;
     table-layout: fixed;
     border-collapse: collapse;
 }
 
 td, th {
-    border: 1px solid;
+    /* border: 1px solid; */
     width: 100%;
     padding: 4px;
+    word-wrap: break-word;
 }
-
 
 th {
     text-align: left;
 }
 
+tr {
+    border-bottom: 1px solid var(--bg-table-header);
+}
+
+tr:last-child {
+    border-bottom: none;
+}
+
+.theader {
+    background-color: var(--bg-table-header);
+}
+
 form {
     border: 3px solid;
     padding: 10px;
+}
+
+
+
+/* Breakpoints 
+
+Citation for CSS breakpoints:
+Date: 12/8/2024
+Adapted from :
+Source URL: https://www.w3schools.com/howto/howto_css_media_query_breakpoints.asp
+
+*/
+
+@media only screen and (max-width: 600px)  {
+    body {
+        width: 400px;
+    }
+}
+@media only screen and (min-width: 600px)  {
+    body {
+        width: 400px;
+    }
+}
+@media only screen and (min-width: 800px)  {
+    body {
+        width: 600px;
+    }
+}
+@media only screen and (min-width: 1200px)  {
+    body {
+        width: 1000px;
+    }
 }
