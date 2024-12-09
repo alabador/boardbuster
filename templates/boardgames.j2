@@ -33,38 +33,40 @@
     </form>
 
     <!-- Board Games Table -->
-    <h2>Board Games</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Game ID</th>
-                <th>Title</th>
-                <th>Category</th>
-                <th>Player Count</th>
-                <th>Cost</th>
-                <th>Quantity</th>
-                <th>Available</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for game in boardgames %}
-            <tr>
-                <td>{{ game.gameID }}</td>
-                <td>{{ game.title }}</td>
-                <td>{{ game.categoryName }}</td>
-                <td>{{ game.playerCount }}</td>
-                <td>{{ game.gameCost }}</td>
-                <td>{{ game.quantity }}</td>
-                <td>{{ 'Yes' if game.quantity > 0 else 'No' }}</td>
-                <td>
-                    <a href="/edit_boardgame/{{ game.gameID }}">Edit</a>
-                    <a href="/delete_boardgame/{{ game.gameID }}">Delete</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <section class="table-container">
+        <h2>Board Games</h2>
+        <table>
+            <thead>
+                <tr class="theader">
+                    <th>Game ID</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Player Count</th>
+                    <th>Cost</th>
+                    <th>Quantity</th>
+                    <th>Available</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for game in boardgames %}
+                <tr>
+                    <td>{{ game.gameID }}</td>
+                    <td>{{ game.title }}</td>
+                    <td>{{ game.categoryName }}</td>
+                    <td>{{ game.playerCount }}</td>
+                    <td>{{ game.gameCost }}</td>
+                    <td>{{ game.quantity }}</td>
+                    <td>{{ 'Yes' if game.quantity > 0 else 'No' }}</td>
+                    <td>
+                        <a href="/edit_boardgame/{{ game.gameID }}">Edit</a>
+                        <a href="/delete_boardgame/{{ game.gameID }}">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
 
     <footer>
         <p>© 2024 Austin Labador & Vincent Le</p>

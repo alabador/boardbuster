@@ -31,34 +31,36 @@
     </form>
 
     <!-- Rentals Table -->
-    <h2>Rentals</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Rental ID</th>
-                <th>Customer</th>
-                <th>Rental Date</th>
-                <th>Return Date</th>
-                <th>Rental Cost</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for rental in rentals %}
-            <tr>
-                <td>{{ rental.rentalID }}</td>
-                <td>{{ rental.customerName }} (ID: {{ rental.customerID }})</td>
-                <td>{{ rental.rentalDate }}</td>
-                <td>{{ rental.returnDate or 'N/A' }}</td>
-                <td>{{ rental.rentalCost }}</td>
-                <td>
-                    <a href="/edit_rental/{{ rental.rentalID }}">Edit</a>
-                    <a href="/delete_rental/{{ rental.rentalID }}">Delete</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <section class="table-container">
+        <h2>Rentals</h2>
+        <table>
+            <thead>
+                <tr class="theader">
+                    <th>Rental ID</th>
+                    <th>Customer</th>
+                    <th>Rental Date</th>
+                    <th>Return Date</th>
+                    <th>Rental Cost</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rental in rentals %}
+                <tr>
+                    <td>{{ rental.rentalID }}</td>
+                    <td>{{ rental.customerName }} (ID: {{ rental.customerID }})</td>
+                    <td>{{ rental.rentalDate }}</td>
+                    <td>{{ rental.returnDate or 'N/A' }}</td>
+                    <td>{{ rental.rentalCost }}</td>
+                    <td>
+                        <a href="/edit_rental/{{ rental.rentalID }}">Edit</a>
+                        <a href="/delete_rental/{{ rental.rentalID }}">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
 
     <footer>
         <p>© 2024 Austin Labador & Vincent Le</p>
