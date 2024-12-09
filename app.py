@@ -178,6 +178,25 @@ def edit_boardgame(gameID):
             WHERE gameID = %s;
             """
             db.execute_query(db_connection=db_connection, query=query, query_params=(title, categoryID, playerCount, gameCost, quantity, gameID))
+
+            # Updates the orders entry with total price.
+            update_totalprice = """
+            UPDATE Orders
+            SET Orders.orderAmount = (
+                SELECT SUM(BoardGames.gameCost * OrderDetails.quantity)
+                FROM OrderDetails
+                JOIN BoardGames ON OrderDetails.gameID = BoardGames.gameID
+                WHERE OrderDetails.orderID = Orders.orderID
+            )
+            WHERE Orders.orderID IN (
+                SELECT OrderDetails.orderID
+                FROM OrderDetails
+                WHERE OrderDetails.gameID = %s
+            )
+            """ % (gameID)
+            cursor = db.execute_query(db_connection=db_connection, query=update_totalprice)
+
+
         return redirect("/boardgames")
     
 @app.route('/categories', methods=["POST", "GET"])
@@ -424,7 +443,6 @@ def delete_orderdetail(orderDetailID, orderID):
 
     return redirect("/orderdetails")
 
-
 @app.route("/edit_orderdetail/<int:orderDetailID>", methods=["POST", "GET"])
 def edit_orderdetail(orderDetailID):
     if request.method == "GET":
@@ -447,6 +465,19 @@ def edit_orderdetail(orderDetailID):
             query = "UPDATE OrderDetails SET OrderDetails.orderID = %s, OrderDetails.gameID = %s, OrderDetails.quantity = %s WHERE OrderDetails.orderDetailID = %s;"
             cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(orderID, gameID, quantity, orderDetailID))
             results = cursor.fetchall()
+
+            # Updates the orders entry with new quantity.
+            update_totalprice = """
+            UPDATE Orders
+            SET Orders.orderAmount = (
+                SELECT SUM(BoardGames.gameCost * OrderDetails.quantity)
+                FROM OrderDetails
+                JOIN BoardGames ON OrderDetails.gameID = BoardGames.gameID
+                WHERE OrderDetails.orderID = Orders.orderID
+            )
+            WHERE Orders.orderID = %s
+            """ % (orderID)
+            cursor = db.execute_query(db_connection=db_connection, query=update_totalprice)
         return redirect("/orderdetails")
     
 @app.route('/rentals', methods=["POST", "GET"])
