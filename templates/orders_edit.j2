@@ -39,7 +39,6 @@
 
     <!-- Edit Form -->
     <form id="edit" action="/edit_order/{{ data[0].orderID }}" method="POST">
-        <h2>Edit Order</h2>
 
         <!-- Hidden field for order ID -->
         <input type="hidden" value="{{ data[0].orderID }}" name="orderID" required>
