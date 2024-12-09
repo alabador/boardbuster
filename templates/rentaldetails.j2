@@ -10,6 +10,7 @@
         {% include 'navbar.j2' %}
     </header>
 
+    <main>
     <h1>Manage Rental Details</h1>
 
     <!-- Add New Rental Detail Form -->
@@ -39,34 +40,37 @@
     </form>
 
     <!-- Rental Details Table -->
-    <h2>Rental Details</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Rental Detail ID</th>
-                <th>Rental ID</th>
-                <th>Game</th>
-                <th>Duration</th>
-                <th>Price</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for detail in rentaldetails %}
-            <tr>
-                <td>{{ detail.rentalDetailID }}</td>
-                <td>{{ detail.rentalID }}</td>
-                <td>{{ detail.gameTitle }} (ID: {{ detail.gameID }})</td>
-                <td>{{ detail.rentalDuration }}</td>
-                <td>{{ detail.rentalPrice }}</td>
-                <td>
-                    <a href="/edit_rentaldetail/{{ detail.rentalDetailID }}">Edit</a>
-                    <a href="/delete_rentaldetail/{{ detail.rentalDetailID }}">Delete</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <section class="table-container">
+        <h2>Rental Details</h2>
+        <table>
+            <thead>
+                <tr class="theader">
+                    <th>Rental Detail ID</th>
+                    <th>Rental ID</th>
+                    <th>Game</th>
+                    <th>Duration</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for detail in rentaldetails %}
+                <tr>
+                    <td>{{ detail.rentalDetailID }}</td>
+                    <td>{{ detail.rentalID }}</td>
+                    <td>{{ detail.gameTitle }} (ID: {{ detail.gameID }})</td>
+                    <td>{{ detail.rentalDuration }}</td>
+                    <td>{{ detail.rentalPrice }}</td>
+                    <td>
+                        <a href="/edit_rentaldetail/{{ detail.rentalDetailID }}" class="btn">Edit</a>
+                        <a href="/delete_rentaldetail/{{ detail.rentalDetailID }}" class="btn">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+    </main>
 
     <footer>
         <p>© 2024 Austin Labador & Vincent Le</p>

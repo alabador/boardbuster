@@ -10,6 +10,7 @@
         {% include 'navbar.j2' %}
     </header>
 
+    <main>
     <h1>Manage Customers</h1>
 
     <!-- Add New Customer Form -->
@@ -25,32 +26,35 @@
     </form>
 
     <!-- Customers Table -->
-    <h2>Customers</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Customer ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for customer in customers %}
-            <tr>
-                <td>{{ customer.customerID }}</td>
-                <td>{{ customer.name }}</td>
-                <td>{{ customer.email }}</td>
-                <td>{{ customer.phone }}</td>
-                <td>
-                    <a href="/edit_customer/{{ customer.customerID }}">Edit</a>
-                    <a href="/delete_customer/{{ customer.customerID }}">Delete</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <section class="table-container">
+        <h2>Customers</h2>
+        <table>
+            <thead>
+                <tr class="theader">
+                    <th>Customer ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for customer in customers %}
+                <tr>
+                    <td>{{ customer.customerID }}</td>
+                    <td>{{ customer.name }}</td>
+                    <td>{{ customer.email }}</td>
+                    <td>{{ customer.phone }}</td>
+                    <td>
+                        <a href="/edit_customer/{{ customer.customerID }}" class="btn">Edit</a>
+                        <a href="/delete_customer/{{ customer.customerID }}" class="btn">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+    </main>
 
     <footer>
         <p>© 2024 Austin Labador & Vincent Le</p>

@@ -10,6 +10,7 @@
         {% include 'navbar.j2' %}
     </header>
 
+    <main>
     <h1>Manage Order Details</h1>
     <form id="add" action="/orderdetails" method="POST">
         <h2>Add New Order Detail</h2>
@@ -32,33 +33,36 @@
         <label>Quantity:</label> <input type="number" step="1" min="1" name="quantity" required>
         <input type="submit" value="Add Order Detail" name="Add_Order_Detail" class="btn">
     </form>
+        
+    <section class="table-container">
+        <h2>Order Details</h2>
+        <table>
+            {% if orderdetails %}
+            <tr class="theader">
+                <th>Order Detail ID</th>
+                <th>Order ID</th>
+                <th>Game</th>
+                <th>Quantity</th>
 
-    <h2>Order Details</h2>
-    <table>
-        {% if orderdetails %}
-        <tr>
-            <th>Order Detail ID</th>
-            <th>Order ID</th>
-            <th>Game</th>
-            <th>Quantity</th>
-
-            <!-- Extra header row for edit and delete buttons -->
-            <th>Actions</th>
-        </tr>
-        {% for detail in orderdetails %}
-        <tr>
-            <td>{{detail.orderDetailID}}</td>
-            <td>{{detail.name}} (Order ID: {{detail.orderID}})</td>
-            <td>{{detail.title}} (ID: {{detail.gameID}})</td>
-            <td>{{detail.quantity}}</td>
-            <td>
-                <a href="edit_orderdetail/{{detail.orderDetailID}}" class="btn">Edit</a>
-                <a href="delete_orderdetail/{{detail.orderDetailID}}/{{detail.orderID}}" class="btn">Delete</a>
-            </td>
-        </tr>
-        {% endfor %}
-        {% endif %}
-    </table>
+                <!-- Extra header row for edit and delete buttons -->
+                <th>Actions</th>
+            </tr>
+            {% for detail in orderdetails %}
+            <tr>
+                <td>{{detail.orderDetailID}}</td>
+                <td>{{detail.name}} (Order ID: {{detail.orderID}})</td>
+                <td>{{detail.title}} (ID: {{detail.gameID}})</td>
+                <td>{{detail.quantity}}</td>
+                <td>
+                    <a href="edit_orderdetail/{{detail.orderDetailID}}" class="btn">Edit</a>
+                    <a href="delete_orderdetail/{{detail.orderDetailID}}/{{detail.orderID}}" class="btn">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+        </table>
+    </section>
+    </main>
 
     <footer>
         <p>© 2024 Austin Labador & Vincent Le</p>

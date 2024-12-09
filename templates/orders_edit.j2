@@ -44,20 +44,9 @@
         <input type="hidden" value="{{ data[0].orderID }}" name="orderID" required>
 
         <!-- Fields for editing -->
-        <label for="customerID">Customer:</label>
-        <select id="customerID" name="customerID" required>
-            {% for customer in customers %}
-            <option value="{{ customer['customerID'] }}" {% if customer['customerID'] == data[0]['customerID'] %}selected{% endif %}>
-                {{ customer['name'] }} (ID: {{ customer['customerID'] }})
-            </option>
-            {% endfor %}
-        </select>
 
         <label>Order Date:</label>
         <input type="date" value="{{ data[0].orderDate }}" name="orderDate" required>
-
-        <label>Order Amount:</label>
-        <input type="number" step="0.01" value="{{ data[0].orderAmount }}" name="orderAmount" required>
 
         <!-- Submit button -->
         <input type="submit" value="Save Changes" name="Edit_Order" class="btn">

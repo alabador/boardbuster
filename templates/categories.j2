@@ -10,6 +10,7 @@
         {% include 'navbar.j2' %}
     </header>
 
+    <main>
     <h1>Manage Categories</h1>
 
     <!-- Add New Category Form -->
@@ -25,30 +26,33 @@
     </form>
 
     <!-- Categories Table -->
-    <h2>Categories</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Category ID</th>
-                <th>Category Name</th>
-                <th>Description</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for category in categories %}
-            <tr>
-                <td>{{ category.categoryID }}</td>
-                <td>{{ category.categoryName }}</td>
-                <td>{{ category.description }}</td>
-                <td>
-                    <a href="/edit_category/{{ category.categoryID }}">Edit</a>
-                    <a href="/delete_category/{{ category.categoryID }}">Delete</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <section class="table-container">
+        <h2>Categories</h2>
+        <table>
+            <thead>
+                <tr class="theader">
+                    <th>Category ID</th>
+                    <th>Category Name</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for category in categories %}
+                <tr>
+                    <td>{{ category.categoryID }}</td>
+                    <td>{{ category.categoryName }}</td>
+                    <td>{{ category.description }}</td>
+                    <td>
+                        <a href="/edit_category/{{ category.categoryID }}" class="btn">Edit</a>
+                        <a href="/delete_category/{{ category.categoryID }}" class="btn">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+    </main>
 
     <footer>
         <p>© 2024 Austin Labador & Vincent Le</p>

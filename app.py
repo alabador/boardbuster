@@ -370,12 +370,11 @@ def edit_order(orderID):
         if request.form.get("Edit_Order"):
             # grabs user form inputs
             orderID = request.form["orderID"]
-            customerID = request.form["customerID"]
             orderDate = request.form["orderDate"]
 
             # no null inputs
-            query = "UPDATE Orders SET Orders.customerID = %s, Orders.orderDate = %s WHERE Orders.orderID = %s;"
-            cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(customerID, orderDate, orderID))
+            query = "UPDATE Orders SET Orders.orderDate = %s WHERE Orders.orderID = %s;"
+            cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(orderDate, orderID))
             results = cursor.fetchall()
         return redirect("/orders")
 
