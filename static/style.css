@@ -5,7 +5,8 @@
 :root {
     --bg-color: #F4F4FB;
     --bg-table-container: #ffffff;
-    --bg-table-header: #e6e6e7
+    --bg-table-header: #e6e6e7;
+    --footer-color:  rgb(255, 238, 216);
 }
 
 /* CSS RESET */
@@ -33,12 +34,23 @@ img {
     height: auto;
 }
 
-/* STYLES */
+/* Layout */
 
 body {
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
+main {
+    flex-grow: 1;
+}
+
+footer *{
+    text-align: center;
+    padding: 2rem;
+}
 
 /* Fonts */
 h1 {
@@ -52,11 +64,13 @@ h2 {
 }
 
 
+/* Tables */
 .table-container {
     background-color: var(--bg-table-container);
     padding: 2rem;
     margin-top: 1rem;
     border-radius: 16px;
+    width: 100%;
 }
 .table-container h2 {
     background-color: inherit;
@@ -70,9 +84,8 @@ table {
 }
 
 td, th {
-    /* border: 1px solid; */
     width: 100%;
-    padding: 4px;
+    padding: 8px;
     word-wrap: break-word;
 }
 
@@ -82,6 +95,10 @@ th {
 
 tr {
     border-bottom: 1px solid var(--bg-table-header);
+}
+
+tr td {
+    padding: 1rem 8px;
 }
 
 tr:last-child {
@@ -108,16 +125,16 @@ Source URL: https://www.w3schools.com/howto/howto_css_media_query_breakpoints.as
 
 */
 
-@media only screen and (max-width: 600px)  {
+/* @media only screen and (max-width: 600px)  {
     body {
         width: 400px;
     }
-}
-@media only screen and (min-width: 600px)  {
+} */
+/* @media only screen and (min-width: 600px)  {
     body {
         width: 400px;
     }
-}
+} */
 @media only screen and (min-width: 800px)  {
     body {
         width: 600px;
