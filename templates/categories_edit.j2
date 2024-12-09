@@ -7,12 +7,11 @@
 </head>
 <body>
     <header>
-
+        {% include 'navbar.j2' %}
     </header>
 
-    <h1>Edit Category</h1>
-
-    <!-- Display Category Details in a Table -->
+    <!-- Category Overview Table -->
+    <h2>Category Overview</h2>
     <table>
         {% if data %}
         <thead>
@@ -33,6 +32,8 @@
         </tbody>
         {% endif %}
     </table>
+
+    <h1>Edit Category</h1>
 
     <!-- Edit Form -->
     <form id="edit" action="/edit_category/{{data[0].categoryID}}" method="POST">
