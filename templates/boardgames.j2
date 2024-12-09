@@ -60,8 +60,8 @@
                     <td>{{ game.quantity }}</td>
                     <td>{{ 'Yes' if game.quantity > 0 else 'No' }}</td>
                     <td>
-                        <a href="/edit_boardgame/{{ game.gameID }}">Edit</a>
-                        <a href="/delete_boardgame/{{ game.gameID }}">Delete</a>
+                        <a href="/edit_boardgame/{{ game.gameID }}" class="btn">Edit</a>
+                        <a href="/delete_boardgame/{{ game.gameID }}" class="btn">Delete</a>
                     </td>
                 </tr>
                 {% endfor %}

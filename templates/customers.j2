@@ -46,8 +46,8 @@
                     <td>{{ customer.email }}</td>
                     <td>{{ customer.phone }}</td>
                     <td>
-                        <a href="/edit_customer/{{ customer.customerID }}">Edit</a>
-                        <a href="/delete_customer/{{ customer.customerID }}">Delete</a>
+                        <a href="/edit_customer/{{ customer.customerID }}" class="btn">Edit</a>
+                        <a href="/delete_customer/{{ customer.customerID }}" class="btn">Delete</a>
                     </td>
                 </tr>
                 {% endfor %}
