@@ -7,65 +7,63 @@
 </head>
 <body>
     <header>
-
+        {% include 'navbar.j2' %}
     </header>
 
-    <h1>Edit Order Detail</h1>
-
+    <!-- Order Detail Overview Table -->
+    <h2>Order Detail Overview</h2>
     <table>
         {% if data %}
         <thead>
             <tr>
-                <!-- Iterate through each key in the first entry to get the
-                column name -->
-
-                {% for key in data[0].keys() %}
-
-
-                <!-- Create a <th> tag with the key inside of it, this will be
-                our header row -->
-                <th data-field="{{ key }}">{{ key }}</th>
-
-                <!-- End of this for loop -->
-                {% endfor %}
-
+                <th>Order Detail ID</th>
+                <th>Order ID</th>
+                <th>Game</th>
+                <th>Quantity</th>
+                <th>Price</th>
             </tr>
         </thead>
         <tbody>
             {% for order in data %}
             <tr>
-                <!-- Then iterate through every key in the current customer dictionary -->
-                {% for key in order.keys() %}
-                <td>{{order[key]}}</td>
-                {% endfor %}
+                <td>{{ order.orderDetailID }}</td>
+                <td>{{ order.orderID }}</td>
+                <td>{{ order.title }} (ID: {{ order.gameID }})</td>
+                <td>{{ order.quantity }}</td>
+                <td>{{ order.price }}</td>
             </tr>
             {% endfor %}
         </tbody>
         {% endif %}
     </table>
 
+    <h1>Edit Order Detail</h1>
 
+    <!-- Edit Form -->
     <form id="edit" action="/edit_orderdetail/{{data[0].orderDetailID}}" method="POST">
-        <h2>Edit Order</h2>
-        <!-- We can preset form inputs to match attributes currently stored for 'id' of person to be updated via value= and accessing our passed data tuple -->
-        <!-- Create hidden form input to store the passed 'id' of the person we are editing so we can access it easily in our 'POST' method in our app.py -->
-        <input type="hidden" value="{{data[0].orderDetailID}}" class="form-control" id="personID" name="orderDetailID" required>
-        <input type="hidden" value="{{data[0].orderID}}" class="form-control" id="personID" name="orderID" required>
         
 
-        <label for="addGameID">Game:</label>                
+        <!-- Hidden field for Order Detail ID -->
+        <input type="hidden" value="{{data[0].orderDetailID}}" name="orderDetailID" required>
+        <input type="hidden" value="{{data[0].orderID}}" name="orderID" required>
+
+        <!-- Dropdown for Game Selection -->
+        <label for="addGameID">Game:</label>
         <select name="gameID" id="addgameID" required>
-            {% if gamedata %}
             {% for game in gamedata %}
-            <option value="{{game.gameID}}">{{game.title}}</option>
+            <option value="{{game.gameID}}" {% if game.gameID == data[0].gameID %}selected{% endif %}>
+                {{game.title}} (ID: {{game.gameID}})
+            </option>
             {% endfor %}
-            {% endif %}
         </select>
 
-        <label>Quantity:</label> <input type="number" name="quantity" step="1" min="0" value="{{data[0].quantity}}" required>
-        
-        <input type="submit" value="Edit Order Detail" name="Edit_OrderDetail" class="btn">
-        <a href="/orderdetails" class='btn'>Cancel</a>
+        <!-- Quantity Input -->
+        <label>Quantity:</label>
+        <input type="number" name="quantity" step="1" min="0" value="{{data[0].quantity}}" required>
+
+        <!-- Submit and Cancel Buttons -->
+        <input type="submit" value="Save Changes" name="Edit_OrderDetail" class="btn">
+        <a href="/orderdetails" class="btn">Cancel</a>
     </form>
 
     <footer>

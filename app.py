@@ -483,17 +483,24 @@ def delete_orderdetail(orderDetailID, orderID):
 @app.route("/edit_orderdetail/<int:orderDetailID>", methods=["POST", "GET"])
 def edit_orderdetail(orderDetailID):
     if request.method == "GET":
-        query = "SELECT * FROM OrderDetails WHERE orderDetailID = %s" % (orderDetailID)
-        cursor = db.execute_query(db_connection=db_connection, query=query)
+        # Fetch the specific order detail with the game title included
+        query = """
+        SELECT OrderDetails.orderDetailID, OrderDetails.orderID, OrderDetails.gameID, 
+               OrderDetails.quantity, OrderDetails.price, BoardGames.title
+        FROM OrderDetails
+        JOIN BoardGames ON OrderDetails.gameID = BoardGames.gameID
+        WHERE OrderDetails.orderDetailID = %s;
+        """
+        cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(orderDetailID,))
         data = cursor.fetchall()
 
+        # Fetch all games for the dropdown
         query2 = """
         SELECT BoardGames.title, BoardGames.gameID
         FROM BoardGames;
         """
         cursor = db.execute_query(db_connection=db_connection, query=query2)
         game_data = cursor.fetchall()
-
 
         return render_template("orderdetails_edit.j2", data=data, gamedata=game_data)
     
