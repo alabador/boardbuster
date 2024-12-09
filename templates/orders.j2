@@ -18,7 +18,7 @@
         <select name="customer" id="addOrderCustomer" required>
             {% if customers %}
             {% for key in customers %}
-            <option value="{{key['customerID']}}">{{key['name']}}</option>
+            <option value="{{key['customerID']}}">{{key['name']}} (ID: {{key['customerID']}})</option>
             {% endfor %}
             {% endif %}
         </select>
@@ -26,7 +26,7 @@
         <input type="submit" value="Add Order" name="Add_Order" class="btn">
     </form>
 
-    <h2>Existing Orders</h2>
+    <h2>Orders</h2>
     <table>
         {% if orders %}
         <tr>
@@ -41,7 +41,7 @@
         {% for order in orders %}
         <tr>
             <td>{{order.orderID}}</td>
-            <td>{{order.name}}</td>
+            <td>{{order.name}} (ID: {{order.customerID}})</td>
             <td>{{order.orderDate}}</td>
             <td>{{order.orderAmount}}</td>
             <td>
