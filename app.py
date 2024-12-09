@@ -481,7 +481,15 @@ def edit_orderdetail(orderDetailID):
         cursor = db.execute_query(db_connection=db_connection, query=query)
         data = cursor.fetchall()
 
-        return render_template("orderdetails_edit.j2", data=data)
+        query2 = """
+        SELECT BoardGames.title, BoardGames.gameID
+        FROM BoardGames;
+        """
+        cursor = db.execute_query(db_connection=db_connection, query=query2)
+        game_data = cursor.fetchall()
+
+
+        return render_template("orderdetails_edit.j2", data=data, gamedata=game_data)
     
     if request.method == "POST":
         # runs if user presses 'Edit Customer' button
