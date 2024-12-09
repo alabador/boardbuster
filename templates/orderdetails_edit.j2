@@ -50,19 +50,14 @@
         <!-- We can preset form inputs to match attributes currently stored for 'id' of person to be updated via value= and accessing our passed data tuple -->
         <!-- Create hidden form input to store the passed 'id' of the person we are editing so we can access it easily in our 'POST' method in our app.py -->
         <input type="hidden" value="{{data[0].orderDetailID}}" class="form-control" id="personID" name="orderDetailID" required>
+        <input type="hidden" value="{{data[0].orderID}}" class="form-control" id="personID" name="orderID" required>
         
-        <select name="orderID" id="addOrderID" required>
-            {% if data %}
-            {% for key in data %}
-            <option value="{{key['orderID']}}">{{key['orderID']}}</option>
-            {% endfor %}
-            {% endif %}
-        </select>
-        <label for="addGameID">Game ID:</label>                
+
+        <label for="addGameID">Game:</label>                
         <select name="gameID" id="addgameID" required>
-            {% if data %}
-            {% for key in data %}
-            <option value="{{key['gameID']}}">{{key['gameID']}}</option>
+            {% if gamedata %}
+            {% for game in gamedata %}
+            <option value="{{game.gameID}}">{{game.title}}</option>
             {% endfor %}
             {% endif %}
         </select>
