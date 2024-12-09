@@ -17,13 +17,11 @@
         <h2>Add New Board Game</h2>
         <label>Title:</label>
         <input type="text" name="title" required>
-        <label>Category ID:</label>
+        <label>Category:</label>
         <select name="categoryID" id="addCategoryID" required>
-            {% if categories %}
             {% for key in categories %}
-            <option value="{{key['categoryID']}}">{{key['categoryID']}}</option>
+            <option value="{{ key['categoryID'] }}">{{ key['categoryName'] }}</option>
             {% endfor %}
-            {% endif %}
         </select>
         <label>Player Count:</label>
         <input type="number" name="playerCount" required>
@@ -54,7 +52,7 @@
             <tr>
                 <td>{{ game.gameID }}</td>
                 <td>{{ game.title }}</td>
-                <td>{{ game.categoryID }}</td>
+                <td>{{ game.categoryName }}</td>
                 <td>{{ game.playerCount }}</td>
                 <td>{{ game.gameCost }}</td>
                 <td>{{ game.quantity }}</td>

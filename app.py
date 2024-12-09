@@ -106,16 +106,23 @@ def boardgames():
         try:
             # Select only the necessary columns
             query = """
-            SELECT gameID, title, categoryID, playerCount, gameCost, quantity
-            FROM BoardGames;
+            SELECT BoardGames.gameID, BoardGames.title, Categories.categoryName, 
+                   BoardGames.playerCount, BoardGames.gameCost, BoardGames.quantity
+            FROM BoardGames
+            JOIN Categories ON BoardGames.categoryID = Categories.categoryID;
             """
             cursor = db.execute_query(db_connection=db_connection, query=query)
             results = cursor.fetchall()
 
-            # Query to grab customer ID's for dropdown.
-            query2 = "SELECT categoryID from Categories"
+            # Query to grab categoryID and categoryName for the dropdown
+            query2 = "SELECT categoryID, categoryName FROM Categories;"
             cursor = db.execute_query(db_connection=db_connection, query=query2)
             categories_data = cursor.fetchall()
+
+            # Query to grab customer IDs for dropdown (if still relevant)
+            query3 = "SELECT customerID, name FROM Customers;"
+            cursor = db.execute_query(db_connection=db_connection, query=query3)
+            customers_data = cursor.fetchall()
 
             return render_template("boardgames.j2", boardgames=results, categories=categories_data)
         except:
@@ -154,13 +161,22 @@ def edit_boardgame(gameID):
     if request.method == "GET":
         # Fetch the specific board game for editing
         query = """
-        SELECT gameID, title, categoryID, playerCount, gameCost, quantity
+        SELECT  BoardGames.gameID, BoardGames.title, BoardGames.categoryID, 
+                Categories.categoryName, BoardGames.playerCount, 
+                BoardGames.gameCost, BoardGames.quantity
         FROM BoardGames
+        JOIN Categories ON BoardGames.categoryID = Categories.categoryID
         WHERE gameID = %s;
         """
         cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(gameID,))
         data = cursor.fetchall()
-        return render_template("boardgames_edit.j2", data=data)
+
+        # Query to grab all categories for the dropdown
+        query2 = "SELECT categoryID, categoryName FROM Categories;"
+        cursor = db.execute_query(db_connection=db_connection, query=query2)
+        categories_data = cursor.fetchall()
+        
+        return render_template("boardgames_edit.j2", data=data, categories=categories_data)
 
     if request.method == "POST":
         if request.form.get("Edit_BoardGame"):

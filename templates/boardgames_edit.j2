@@ -7,34 +7,39 @@
 </head>
 <body>
     <header>
-        
+        {% include 'navbar.j2' %}
     </header>
 
-    <h1>Edit Board Game</h1>
-
-    <!-- Display Board Game Details in a Table -->
+    <!-- Board Game Overview Table -->
+    <h2>Board Game Overview</h2>
     <table>
         {% if data %}
         <thead>
             <tr>
-                <!-- Iterate through keys in the first entry to create column headers -->
-                {% for key in data[0].keys() %}
-                <th data-field="{{ key }}">{{ key }}</th>
-                {% endfor %}
+                <th>Game ID</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Player Count</th>
+                <th>Game Cost</th>
+                <th>Quantity</th>
             </tr>
         </thead>
         <tbody>
             {% for game in data %}
             <tr>
-                <!-- Iterate through each key-value pair in the game dictionary -->
-                {% for key in game.keys() %}
-                <td>{{ game[key] }}</td>
-                {% endfor %}
+                <td>{{ game.gameID }}</td>
+                <td>{{ game.title }}</td>
+                <td>{{ game.categoryName }}</td>
+                <td>{{ game.playerCount }}</td>
+                <td>{{ game.gameCost }}</td>
+                <td>{{ game.quantity }}</td>
             </tr>
             {% endfor %}
         </tbody>
         {% endif %}
     </table>
+
+    <h1>Edit Board Game</h1>
 
     <!-- Edit Form -->
     <form id="edit" action="/edit_boardgame/{{data[0].gameID}}" method="POST">
@@ -47,13 +52,13 @@
         <label>Title:</label>
         <input type="text" value="{{data[0].title}}" name="title" required>
 
-        <label>Category ID:</label>
-        <select name="categoryID" id="addCategoryID" required>
-            {% if data %}
-            {% for key in data %}
-            <option value="{{key['categoryID']}}">{{key['categoryID']}}</option>
+        <label for="categoryID">Category:</label>
+        <select id="categoryID" name="categoryID" required>
+            {% for key in categories %}
+            <option value="{{key['categoryID']}}" {% if key['categoryID'] == data[0]['categoryID'] %}selected{% endif %}>
+                {{key['categoryName']}}
+            </option>
             {% endfor %}
-            {% endif %}
         </select>
 
         <label>Player Count:</label>
