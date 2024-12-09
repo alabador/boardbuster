@@ -485,7 +485,7 @@ def edit_orderdetail(orderDetailID):
         # Fetch the specific order detail with the game title included
         query = """
         SELECT OrderDetails.orderDetailID, OrderDetails.orderID, OrderDetails.gameID, 
-               OrderDetails.quantity
+               OrderDetails.quantity, BoardGames.title
         FROM OrderDetails
         JOIN BoardGames 
         ON (OrderDetails.gameID = BoardGames.gameID)
