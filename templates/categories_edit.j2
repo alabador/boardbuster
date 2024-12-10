@@ -9,8 +9,9 @@
     <header>
         {% include 'navbar.j2' %}
     </header>
-
+    
     <!-- Category Overview Table -->
+    <section class="table-container">
     <h2>Category Overview</h2>
     <table>
         {% if data %}
@@ -32,8 +33,9 @@
         </tbody>
         {% endif %}
     </table>
+    </section>
 
-    <h1>Edit Category</h1>
+    <h1 class="edit-h1">Edit Category</h1>
 
     <!-- Edit Form -->
     <form id="edit" action="/edit_category/{{data[0].categoryID}}" method="POST">
