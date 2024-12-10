@@ -11,6 +11,7 @@
     </header>
 
     <!-- Order Detail Overview Table -->
+    <section class="table-container">
     <h2>Order Detail Overview</h2>
     <table>
         {% if data %}
@@ -34,8 +35,9 @@
         </tbody>
         {% endif %}
     </table>
+    </section>
 
-    <h1>Edit Order Detail</h1>
+    <h1 class="edit-h1">Edit Order Detail</h1>
 
     <!-- Edit Form -->
     <form id="edit" action="/edit_orderdetail/{{data[0].orderDetailID}}" method="POST">

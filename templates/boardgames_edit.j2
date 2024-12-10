@@ -11,6 +11,7 @@
     </header>
 
     <!-- Board Game Overview Table -->
+    <section class="table-container">
     <h2>Board Game Overview</h2>
     <table>
         {% if data %}
@@ -38,8 +39,9 @@
         </tbody>
         {% endif %}
     </table>
+    </section>
 
-    <h1>Edit Board Game</h1>
+    <h1 class="edit-h1">Edit Board Game</h1>
 
     <!-- Edit Form -->
     <form id="edit" action="/edit_boardgame/{{data[0].gameID}}" method="POST">

@@ -36,6 +36,19 @@ img {
 }
 
 /* Layout */
+nav {
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap:wrap;
+    background-color: var(--bg-table-container);
+    border-radius: 0 0 16px 16px;
+}
+
+nav a {
+    text-decoration: none;
+}
+
 
 body {
     margin: 0 auto;
@@ -54,6 +67,14 @@ footer *{
     padding: 2rem;
 }
 
+#home-body-p {
+    margin-top: 2rem;
+}
+
+#home-img-container {
+    text-align:center;
+    margin-top: 2rem;
+}
 
 /* Fonts */
 h1 {
@@ -66,6 +87,9 @@ h2 {
     padding-bottom: 1rem;
 }
 
+.edit-h1 {
+    padding-top: 1rem;
+}
 
 /* Tables */
 .table-container {
@@ -127,7 +151,7 @@ form h2 {
     background-color: inherit;
 }
 
-form input,select {
+form input,select, textarea {
     padding: 8px 0 8px 8px;
     border-radius: 4px;
     border: 1px solid var(--input-color);
@@ -140,12 +164,21 @@ form input,select {
     font-family: 'Rubik', 'Sans-Serif';
 }
 
+.btn:hover{
+    cursor: pointer;
+}
+
 a.btn {
     padding: 8px;
     display: inline-block;
     margin: 1px;
     text-align:center;
     text-decoration: none;
+}
+
+form .btn {
+    padding: 16px;
+    font-weight: 500;
 }
 
 
@@ -158,16 +191,16 @@ Source URL: https://www.w3schools.com/howto/howto_css_media_query_breakpoints.as
 
 */
 
-/* @media only screen and (max-width: 600px)  {
+@media only screen and (max-width: 600px)  {
     body {
         width: 400px;
     }
-} */
-/* @media only screen and (min-width: 600px)  {
+}
+@media only screen and (min-width: 600px)  {
     body {
         width: 400px;
     }
-} */
+}
 @media only screen and (min-width: 800px)  {
     body {
         width: 600px;

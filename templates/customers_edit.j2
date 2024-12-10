@@ -11,6 +11,7 @@
     </header>
 
     <!-- Customer Overview Table -->
+    <section class="table-container">
     <h2>Customer Overview</h2>
     <table>
         {% if data %}
@@ -34,8 +35,9 @@
         </tbody>
         {% endif %}
     </table>
+    </section>
 
-    <h1>Edit Customer</h1>
+    <h1 class="edit-h1">Edit Customer</h1>
 
     <!-- Edit Form -->
     <form id="edit" action="/edit_customer/{{data[0].customerID}}" method="POST">

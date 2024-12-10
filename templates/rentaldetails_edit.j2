@@ -11,6 +11,7 @@
     </header>
 
     <!-- Rental Details Table -->
+    <section class="table-container">
     <h2>Rental Detail Overview</h2>
     <table>
         {% if data %}
@@ -34,8 +35,9 @@
         </tbody>
         {% endif %}
     </table>
+    </section>
 
-    <h1>Edit Rental Detail</h1>
+    <h1 class="edit-h1">Edit Rental Detail</h1>
 
     <!-- Edit Rental Detail Form -->
     <form method="POST" action="/edit_rentaldetail/{{ data[0].rentalDetailID }}">
